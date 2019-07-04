@@ -15,18 +15,38 @@ public class Votes {
     @Column(name = "note")
     private int note;
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+
+    /**
+     * Gets note.
+     *
+     * @return the note
+     */
     public int getNote() {
         return note;
     }
-
+    /**
+     * Sets note.
+     *
+     * @param note the note
+     */
     public void setNote(int note) {
         this.note = note;
     }
