@@ -33,7 +33,6 @@ public class Votes {
         this.id = id;
     }
 
-
     /**
      * Gets note.
      *

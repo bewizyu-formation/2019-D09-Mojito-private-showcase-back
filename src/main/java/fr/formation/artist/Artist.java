@@ -37,6 +37,7 @@ public class Artist {
      *
      * @return the id
      */
+
     public Long getId() {
         return id;
     }
@@ -82,6 +83,7 @@ public class Artist {
      *
      * @param city the city
      */
+
     public void setCity(String city) {
         this.city = city;
     }

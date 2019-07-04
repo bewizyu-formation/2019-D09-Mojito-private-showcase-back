@@ -21,9 +21,6 @@ public class UserCommun {
     @Column(name = "adress")
     private String adress;
 
-
-
-
     /**
      * Gets id.
      *
@@ -38,7 +35,6 @@ public class UserCommun {
      *
      * @param id the id
      */
-
     public void setId(Long id) {
         this.id = id;
     }

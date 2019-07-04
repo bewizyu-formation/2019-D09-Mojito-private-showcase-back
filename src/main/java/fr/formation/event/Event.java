@@ -25,8 +25,6 @@ public class Event {
     @Column(name = "nbPlace")
     private int nbPlace;
 
-
-
     /**
      * Gets id.
      *
@@ -40,6 +38,7 @@ public class Event {
      *
      * @param id the id
      */
+
     public void setId(Long id) {
         this.id = id;
     }

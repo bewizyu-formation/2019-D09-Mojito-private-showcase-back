@@ -19,8 +19,6 @@ public class Reservation {
     @Column(name = "nbPlace")
     private int nbPlace;
 
-
-
     /**
      * Gets id.
      *
@@ -29,7 +27,6 @@ public class Reservation {
     public Long getId() {
         return id;
     }
-
 
     /**
      * Sets id.
