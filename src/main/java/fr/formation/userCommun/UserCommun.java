@@ -1,11 +1,13 @@
 package fr.formation.userCommun;
 
+import fr.formation.user.User;
+
 import javax.persistence.*;
 
 
 @Entity
 @Table(name = "userCommun")
-public class UserCommun {
+public class UserCommun extends User {
 
 
     @Id

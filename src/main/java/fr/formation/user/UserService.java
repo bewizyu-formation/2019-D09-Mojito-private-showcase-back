@@ -67,21 +67,31 @@ public class UserService implements UserDetailsService {
 	 * @param password the password
 	 * @param roles    the roles
 	 */
-	public void addNewUser(String username, String password, String... roles) {
+	public boolean addNewUser(String username, String password, String... roles) {
 
-		User user = new User();
-		user.setUsername(username);
-		user.setPassword(password);
-		user = userRepository.save(user);
+        User existingUser = userRepository.findByUsername(username);
+	    if(existingUser == null) {
 
-		for (String role : roles) {
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            user = userRepository.save(user);
 
-			UserRole userRole = new UserRole();
-			userRole.setRole(role);
-			userRole.setUserId(user.getId());
+            for (String role : roles) {
 
-			userRoleRepository.save(userRole);
-		}
+                UserRole userRole = new UserRole();
+                userRole.setRole(role);
+                userRole.setUserId(user.getId());
 
+                userRoleRepository.save(userRole);
+            }
+            return true;
+        }else{
+	        return false;
+        }
+	}
+
+	public int getListSize(){
+		return userRepository.findAll().size();
 	}
 }
