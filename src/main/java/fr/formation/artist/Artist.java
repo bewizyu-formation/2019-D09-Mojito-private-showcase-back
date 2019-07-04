@@ -1,5 +1,7 @@
 package fr.formation.artist;
 
+import fr.formation.user.User;
+
 import javax.persistence.*;
 
 
@@ -7,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "artist")
 
 
-public class Artist {
+public class Artist extends User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
