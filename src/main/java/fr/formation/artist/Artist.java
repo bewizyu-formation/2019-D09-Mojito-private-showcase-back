@@ -33,6 +33,24 @@ public class Artist extends User {
     @Column(name = "imageType")
     private String imageType;
 
+    @Column(name = "adress")
+    private String adress;
+
+    /**
+     * Get Adress
+     * @return the adress
+     */
+    public String getAdress() {
+        return adress;
+    }
+
+    /**
+     * set the adress
+     * @param adress : the adress
+     */
+    public void setAdress(String adress) {
+        this.adress = adress;
+    }
 
     /**
      * Gets id.

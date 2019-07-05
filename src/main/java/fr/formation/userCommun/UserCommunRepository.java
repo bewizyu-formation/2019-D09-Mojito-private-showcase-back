@@ -14,7 +14,19 @@ public interface UserCommunRepository extends JpaRepository<UserCommun, Long> {
      * @return the list of users
      */
     public List<UserCommun> findAll();
+
+    /**
+     * find the common user of given username
+     * @param username : the username of the common user to search
+     * @return the common user with 'username' as username, or null
+     */
     public UserCommun findByUsername(String username);
+
+    /**
+     * find the common user of given id
+     * @param id : the id of the common user to search
+     * @return an optional conataining the common user of id 'id' if it exists
+     */
     public Optional<UserCommun> findById(Long id);
 
 }

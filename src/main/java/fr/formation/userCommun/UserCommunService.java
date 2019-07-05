@@ -6,6 +6,8 @@ import fr.formation.user.UserRole;
 import fr.formation.user.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +60,7 @@ public class UserCommunService {
      * @return true if the user exists, false otherwise
      */
     public boolean userExistsById(long id){
-        return userRepository.findById(id) != null;
+        return userRepository.findById(id).isPresent();
     }
 
     /**
@@ -102,9 +104,20 @@ public class UserCommunService {
      * @return true if the user has been added, else false
      */
     public boolean addUserCommun(UserCommun userToAdd){
+        System.out.println("===============================");
+
+        System.out.println("ADRESS : " +userToAdd.getAdress());
+        System.out.println(userToAdd.getCity());
+        System.out.println(userToAdd.getEmail());
+        System.out.println(userToAdd.getPassword());
+        System.out.println(userToAdd.getUsername());
+
         if(this.userWithIdenticalNameExists(userToAdd)){
             return false;
         }else{
+            if(userToAdd.getAdress() == null || userToAdd.getCity() == null || userToAdd.getEmail() == null || userToAdd.getPassword() == null || userToAdd.getUsername() == null){
+                return false;
+            }
             userCommunRepository.save(userToAdd);
 
             UserRole userRole = new UserRole();
@@ -126,11 +139,16 @@ public class UserCommunService {
         if(userToUpdate == null){
             return false;
         }else{
+            if(newUser.getAdress() == null || newUser.getCity() == null || newUser.getEmail() == null || newUser.getPassword() == null){
+                return false;
+            }
             userToUpdate.setAdress(newUser.getAdress());
             userToUpdate.setCity(newUser.getCity());
             userToUpdate.setEmail(newUser.getEmail());
             userToUpdate.setPassword(newUser.getPassword());
+
             userCommunRepository.save(userToUpdate);
+
             return true;
         }
     }
