@@ -32,7 +32,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserCommonControllerTest {
 
+    @Test
+    public void ok(){
 
+    }
   /*  @Autowired
     private MockMvc mvc;
 

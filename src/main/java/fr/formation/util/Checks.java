@@ -23,23 +23,29 @@ public class Checks {
     }
 
     public static boolean checkWithPassword(Artist artist){
-        return !(!(artist.getImage() == null ^ artist.getImageType() == null) || (checkEmail(artist.getEmail())) || (checkPassword(artist.getPassword()))
+        if (artist == null){
+            return false;
+        }
+        return !((artist.getImage() == null ^ artist.getImageType() == null) || !(checkEmail(artist.getEmail())) || !(checkPassword(artist.getPassword()))
                 || artist.getDescription() == null || artist.getAdress() == null || artist.getName() == null || artist.getUsername() == null || artist.getCity() == null);
     }
 
     public static boolean checkWithPassword(UserCommun user){
-        return !((checkEmail(user.getEmail())) || (checkPassword(user.getPassword()))
+        return !(!(checkEmail(user.getEmail())) || !(checkPassword(user.getPassword()))
                  || user.getAdress() == null || user.getCity() == null || user.getUsername() == null);
     }
 
     public static boolean check(Artist artist){
-        return !(!(artist.getImage() == null ^ artist.getImageType() == null) || (checkEmail(artist.getEmail()))
+        if (artist == null){
+            return false;
+        }
+        return !((artist.getImage() == null ^ artist.getImageType() == null) || !(checkEmail(artist.getEmail()))
                 || artist.getDescription() == null || artist.getAdress() == null || artist.getName() == null
-                || artist.getUsername() == null || artist.getCity() == null);
+                || artist.getUsername() == null ||  artist.getCity() == null);
     }
 
     public static boolean check(UserCommun user){
-        return !((checkEmail(user.getEmail())) || user.getAdress() == null
+        return !(!(checkEmail(user.getEmail())) || user.getAdress() == null
                 || user.getCity() == null || user.getUsername() == null);
     }
 }
