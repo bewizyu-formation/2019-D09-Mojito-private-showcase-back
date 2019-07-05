@@ -56,7 +56,8 @@ public class UserCommonController  {
      * @return true if the user has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public boolean registerCommonUser(@RequestBody UserCommun newUser) {
+    public boolean registerCommonUser(@RequestBody UserCommun newUser,@RequestParam String password) {
+        newUser.setPassword(password);
         return userCommunService.addUserCommun(newUser);
     }
 
