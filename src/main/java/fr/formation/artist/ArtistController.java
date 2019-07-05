@@ -15,19 +15,19 @@ public class ArtistController {
 
 
     /**
-     * list all common users
+     * list all artists
      * @return list of the common users
      */
     @GetMapping(value = "/",produces = "application/json")
     public List<Artist> listArtist(){
 
-        List<Artist> listArtist =  artistService.listArtist();
+        List<Artist> listArtist =  artistService.listArtists();
 
         return listArtist;
     }
 
     /**
-     *  get common user with given id
+     *  get artist with given id
      * @param id : the id of the user to look for
      * @return the user with id 'id'
      */
@@ -38,7 +38,7 @@ public class ArtistController {
     }
 
     /**
-     *  get common user with given username
+     *  get artist with given username
      *
      * @param username : the username of the user to look for
      * @return the user named 'username"
@@ -49,25 +49,25 @@ public class ArtistController {
     }
 
     /**
-     * add a new user with given json class
-     * @param newUser : the user given by request body
-     * @return true if the user has been added, false otherwise
+     * add a new artist with given json class
+     * @param newArtist : the artist given by request body
+     * @return true if the artist has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public boolean registerArtist(@RequestBody Artist newUser,@RequestParam String password) {
-        newUser.setPassword(password);
-        return artistService.addArtist(newUser);
+    public boolean registerArtist(@RequestBody Artist newArtist,@RequestParam String password) {
+        newArtist.setPassword(password);
+        return artistService.addArtist(newArtist);
     }
 
     /**
      *  modify the user with given id
      * @param id : the id of the user to modify
-     * @param newUser : the new data
+     * @param newArtist : the new data
      * @return true if the user has been modified, false otherwise
      */
     @PostMapping(value = "/id/{id}", consumes = "application/json")
-    public boolean modifyArtist(@PathVariable long id,@RequestBody Artist newUser) {
-        return artistService.modifyArtist(id,newUser);
+    public boolean modifyArtist(@PathVariable long id,@RequestBody Artist newArtist) {
+        return artistService.modifyArtist(id,newArtist);
     }
 
 }

@@ -1,5 +1,6 @@
 package fr.formation.util;
 
+import fr.formation.artist.Artist;
 import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.Test;
@@ -96,5 +97,135 @@ public class ChecksTest {
     @Test
     public void checkPasswordNull() {
         Assertions.assertThat(Checks.checkPassword(null)).isFalse();
+    }
+
+    @Test
+    public void checkArtist() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setImage("image");
+        newArtist.setImageType("imType");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isTrue();
+    }
+
+    @Test
+    public void checkArtist2() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isTrue();
+    }
+
+    @Test
+    public void checkArtistPartialImage1() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setImage("image");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkArtistPartialImage2() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setImageType("imType");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist1() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist2() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist3() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist4() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setName("name");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist5() {
+        Artist newArtist = new Artist();
+        newArtist.setUsername("usrrname");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+    @Test
+    public void checkPartialArtist6() {
+        Artist newArtist = new Artist();
+        newArtist.setName("name");
+        newArtist.setDescription("lorem ipsum");
+        newArtist.setAdress("1 rue");
+        newArtist.setEmail("aze@rezr.com");
+        newArtist.setCity("city");
+        Assertions.assertThat(Checks.check(newArtist)).isFalse();
+    }
+
+
+
+    @Test
+    public void checkArtistNullShouldFail() {
+        Assertions.assertThat(Checks.check((Artist)null)).isFalse();
+    }
+
+    @Test
+    public void checkArtistEmptyShouldFail() {
+        Assertions.assertThat(Checks.check(new Artist())).isFalse();
     }
 }

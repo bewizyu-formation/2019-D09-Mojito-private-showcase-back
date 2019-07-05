@@ -40,7 +40,7 @@ public class ArtistService {
      *
      * @return the list of all common user
      */
-    public List<Artist> listArtist(){
+    public List<Artist> listArtists(){
         return artistRepository.findAll();
     }
 
@@ -130,7 +130,7 @@ public class ArtistService {
         if(artistToUpdate == null){
             return false;
         }else{
-            if(Checks.check(newArtist)){
+            if(!Checks.check(newArtist)){
                 return false;
             }
             artistToUpdate.setAdress(newArtist.getAdress());
