@@ -1,0 +1,139 @@
+.background{
+    width: 1280px;
+    height: 294px;
+    box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.5);
+  }
+
+body{
+    width: 1280px;
+    height: 992px;
+    background-color: #9b9b9b;
+  }
+
+.Fond{
+    width: 682px;
+    height: 462px;
+    border-radius: 14px;
+    background-color: #e7e6e6;
+    margin: auto;
+  }
+
+.title{
+    width: 271px;
+    height: 28px;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.4;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .Hint-text {
+    width: 150px;
+    height: 24px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  .Text_Input{
+    width: 398px;
+    height: 48px;
+    margin-top: 15px;
+  }
+
+  .Hint-text{
+    width: 190px;
+    height: 24px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  .Annuler{
+    width: 52px;
+    height: 16px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .button-bg-neutral {
+    width: 93px;
+    height: 36px;
+    border-radius: 2px;
+    margin-right: 17px;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+    background-color: #4a4a4a;
+  }
+
+  .Valider{
+    width: 48px;
+    height: 16px;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  
+
+  .button-bg-ok{
+    width: 93px;
+    height: 36px;
+    border-radius: 2px;
+    
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 2px 0 rgba(0, 0, 0, 0.12);
+    background-color: #17998c;
+  }
+
+  .bounds{
+    width: 396px;
+    height: 48px;
+    border: none;
+  }
+  
+
+.line{
+    
+  border-bottom: solid 1px rgba(0, 0, 0, 0.12);
+}
+.centre{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.couleurfond {
+    background-color:  #e7e6e6;
+}
+
+.alignbouton {
+    margin-left: 337px;
+    margin-top: 54px;
+    
+}
