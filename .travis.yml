@@ -9,8 +9,7 @@ addons:
     branches:
     - master
     - develop
-jdk:
- - oraclejdk11
+jdk: openjdk8
 script:
   - mvn clean package -P dev-h2
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -P dev-h2
@@ -18,3 +17,4 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.sonar/cache"
+  
