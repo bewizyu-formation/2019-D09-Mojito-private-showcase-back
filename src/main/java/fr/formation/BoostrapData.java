@@ -48,12 +48,12 @@ public class BoostrapData {
 		);
 		userService.addNewUser(
 				"administrateur",
-				passwordEncoder.encode("administrateur"),
+				passwordEncoder.encode("Administrateur1"),
 				SecurityConstants.ROLE_ADMIN
 		);
 		userService.addNewUser(
 				"utilisateur",
-				passwordEncoder.encode("utilisateur"),
+				passwordEncoder.encode("Utilisateur1"),
 				SecurityConstants.ROLE_USER
 		);
 	}
