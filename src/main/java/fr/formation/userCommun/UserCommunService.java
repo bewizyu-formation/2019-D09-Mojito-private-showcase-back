@@ -105,13 +105,7 @@ public class UserCommunService {
      * @return true if the user has been added, else false
      */
     public boolean addUserCommun(UserCommun userToAdd){
-        System.out.println("===============================");
 
-        System.out.println("ADRESS : " +userToAdd.getAdress());
-        System.out.println(userToAdd.getCity());
-        System.out.println(userToAdd.getEmail());
-        System.out.println(userToAdd.getPassword());
-        System.out.println(userToAdd.getUsername());
 
         if(this.userWithIdenticalNameExists(userToAdd)){
             return false;
@@ -140,13 +134,12 @@ public class UserCommunService {
         if(userToUpdate == null){
             return false;
         }else{
-            if(!Checks.check(userToUpdate)){
+            if(!Checks.check(newUser)){
                 return false;
             }
             userToUpdate.setAdress(newUser.getAdress());
             userToUpdate.setCity(newUser.getCity());
             userToUpdate.setEmail(newUser.getEmail());
-            userToUpdate.setPassword(newUser.getPassword());
 
             userCommunRepository.save(userToUpdate);
 
