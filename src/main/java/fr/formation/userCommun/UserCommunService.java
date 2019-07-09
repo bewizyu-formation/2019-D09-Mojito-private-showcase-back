@@ -4,6 +4,7 @@ import fr.formation.user.User;
 import fr.formation.user.UserRepository;
 import fr.formation.user.UserRole;
 import fr.formation.user.UserRoleRepository;
+import fr.formation.util.Checks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -115,7 +116,7 @@ public class UserCommunService {
         if(this.userWithIdenticalNameExists(userToAdd)){
             return false;
         }else{
-            if(userToAdd.getAdress() == null || userToAdd.getCity() == null || userToAdd.getEmail() == null || userToAdd.getPassword() == null || userToAdd.getUsername() == null){
+            if(!Checks.checkWithPassword(userToAdd)){
                 return false;
             }
             userCommunRepository.save(userToAdd);
@@ -139,7 +140,7 @@ public class UserCommunService {
         if(userToUpdate == null){
             return false;
         }else{
-            if(newUser.getAdress() == null || newUser.getCity() == null || newUser.getEmail() == null || newUser.getPassword() == null){
+            if(!Checks.check(userToUpdate)){
                 return false;
             }
             userToUpdate.setAdress(newUser.getAdress());
