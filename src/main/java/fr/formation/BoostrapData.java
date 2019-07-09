@@ -46,6 +46,16 @@ public class BoostrapData {
 				passwordEncoder.encode("user"),
 				SecurityConstants.ROLE_USER
 		);
+		userService.addNewUser(
+				"administrateur",
+				passwordEncoder.encode("administrateur"),
+				SecurityConstants.ROLE_ADMIN
+		);
+		userService.addNewUser(
+				"utilisateur",
+				passwordEncoder.encode("utilisateur"),
+				SecurityConstants.ROLE_USER
+		);
 	}
 
 }
