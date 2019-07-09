@@ -41,7 +41,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
 
         List<UserCommun> userList = new ArrayList<>();
@@ -75,7 +75,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
 
         Assertions.assertThat(userCommunService.userWithIdenticalNameExists(newUser)).isFalse();
@@ -91,7 +91,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Mockito.when(userCommunRepository.findById(0l)).thenReturn(Optional.of(newUser));
 
@@ -111,7 +111,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Mockito.when(userCommunRepository.findByUsername("user")).thenReturn(newUser);
 
@@ -129,7 +129,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Assertions.assertThat(userCommunService.addUserCommun(newUser)).isTrue();
     }
@@ -140,7 +140,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         Assertions.assertThat(userCommunService.addUserCommun(newUser)).isFalse();
     }
 
@@ -153,7 +153,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Assertions.assertThat(userCommunService.addUserCommun(newUser)).isFalse();
     }
@@ -167,7 +167,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Assertions.assertThat(userCommunService.modifyUserCommun(0,newUser)).isTrue();
     }
@@ -180,7 +180,7 @@ public class UserCommunServiceTest {
         newUser.setEmail("fake@email.com");
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
-        newUser.setPassword("password");
+        newUser.setPassword("passwordA1");
         newUser.setUsername("user");
         Assertions.assertThat(userCommunService.modifyUserCommun(0,newUser)).isFalse();
     }
