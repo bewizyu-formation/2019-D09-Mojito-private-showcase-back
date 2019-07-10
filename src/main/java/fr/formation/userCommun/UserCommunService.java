@@ -37,7 +37,8 @@ public class UserCommunService {
             UserRepository userRepository,
             UserCommunRepository userCommunRepository,
             UserRoleRepository userRoleRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.userCommunRepository = userCommunRepository;
         this.userRoleRepository = userRoleRepository;
