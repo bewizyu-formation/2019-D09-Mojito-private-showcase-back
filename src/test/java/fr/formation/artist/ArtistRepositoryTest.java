@@ -2,16 +2,18 @@ package fr.formation.artist;
 
 import fr.formation.user.User;
 import fr.formation.user.UserRepository;
-import fr.formation.userCommun.UserCommun;
-import fr.formation.userCommun.UserCommunRepository;
-import fr.formation.userCommun.UserCommunService;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,8 @@ public class ArtistRepositoryTest {
     private ArtistRepository artistRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private PasswordEncoder passwordEncoder;
     @InjectMocks
     private ArtistService artistService;
     @Before
