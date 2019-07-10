@@ -3,9 +3,11 @@ package fr.formation.userCommun;
 
 import fr.formation.user.User;
 import fr.formation.user.UserService;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -56,9 +58,17 @@ public class UserCommonController  {
      * @return true if the user has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public boolean registerCommonUser(@RequestBody UserCommun newUser,@RequestParam String password) {
+    public String registerCommonUser(@RequestBody UserCommun newUser,@RequestParam String password, HttpServletResponse response) {
         newUser.setPassword(password);
-        return userCommunService.addUserCommun(newUser);
+        String message;
+        int code = userCommunService.addUserCommun(newUser);
+        message = code+"";
+        if(code == 1) {
+            response.setStatus(Response.SC_OK);
+        } else {
+            response.setStatus(Response.SC_BAD_REQUEST);
+        }
+        return message;
     }
 
     /**
