@@ -111,6 +111,7 @@ public class ArtistService {
      * @return true if the artist has been added, else false
      */
     public int addArtist(Artist artistToAdd){
+
         int code;
         if(this.userWithIdenticalNameExists(artistToAdd)){
             code = 3;
@@ -122,9 +123,9 @@ public class ArtistService {
             code = 0;
         } else {
             try {
-
                 artistToAdd.setPassword(passwordEncoder.encode(artistToAdd.getPassword()));
                 artistRepository.save(artistToAdd);
+                // Artist artist2 = artistRepository.findByUsername(artistToAdd.getUsername());
 
                 UserRole userRole = new UserRole();
                 userRole.setRole(ROLE_USER_SUFFIX);
