@@ -1,5 +1,6 @@
 package fr.formation.userCommun;
 
+import fr.formation.event.Event;
 import fr.formation.user.User;
 import fr.formation.user.UserRepository;
 import fr.formation.user.UserRole;
@@ -157,5 +158,7 @@ public class UserCommunService {
             return true;
         }
     }
+
+
 
 }

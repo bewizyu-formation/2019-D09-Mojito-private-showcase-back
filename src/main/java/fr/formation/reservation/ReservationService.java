@@ -1,7 +1,7 @@
-package fr.formation.event;
+package fr.formation.reservation;
 
-import fr.formation.reservation.Reservation;
-import fr.formation.reservation.ReservationRepository;
+import fr.formation.event.Event;
+import fr.formation.event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EventService {
+public class ReservationService {
 
     private EventRepository eventRepository;
     private ReservationRepository reservationRepository;
@@ -22,7 +22,7 @@ public class EventService {
      */
 
     @Autowired
-    public EventService(
+    public ReservationService(
             ReservationRepository reservationRepository,
             EventRepository eventRepository
 
@@ -32,15 +32,15 @@ public class EventService {
     }
 
 
-    public List<Event> listEvents() {
+    public List<Reservation> listReservations() {
 
-        return eventRepository.findAll();
+        return reservationRepository.findAll();
     }
 
-    public boolean add(Event event) throws PersistenceException {
+    public boolean add(Reservation reservation) throws PersistenceException {
 
         try {
-            eventRepository.save(event);
+            reservationRepository.save(reservation);
         }
         catch
         (PersistenceException ex) {
@@ -51,12 +51,12 @@ public class EventService {
         return true;
     }
 
-    public Event getEventById(Long id) {
-        Optional<Event> optEvent = this.eventRepository.findById(id);
+    public Reservation getReservationById(Long id) {
+        Optional<Reservation> optReservation = this.reservationRepository.findById(id);
 
         try{
-            optEvent.isPresent();
-            return optEvent.get();
+            optReservation.isPresent();
+            return optReservation.get();
         }
         catch (Exception e){
             return null;
@@ -66,22 +66,25 @@ public class EventService {
     /**
      * modify a given event with new data
      * @param id : the id of the artist to change
-     * @param event : the new event for the user
+     * @param reservation : the new event for the user
      * @return true if the artist has been modified, false otherwise
      */
-    public boolean modifyEvent(long id, Event event){
-        Event eventToUpdate = this.getEventById(id);
-        if(eventToUpdate == null){
+    public boolean modifyReservation(long id, Reservation reservation){
+        Reservation reservationToUpdate = this.getReservationById(id);
+        if(reservationToUpdate == null){
             return false;
         }else{
 
-            eventToUpdate.setAdress(event.getAdress());
-            eventToUpdate.setDate(event.getDate());
-            eventToUpdate.setHour(event.getHour());
-            eventToUpdate.setNbPlace(event.getNbPlace());
-            eventRepository.save(eventToUpdate);
+            reservationToUpdate.setDate(reservation.getDate());
+            reservationToUpdate.setNbPlace(reservation.getNbPlace());
+
+            reservationRepository.save(reservationToUpdate);
 
             return true;
         }
     }
+
+
+
+
 }

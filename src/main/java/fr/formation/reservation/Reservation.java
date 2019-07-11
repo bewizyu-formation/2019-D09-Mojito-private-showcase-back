@@ -1,6 +1,11 @@
 package fr.formation.reservation;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import fr.formation.event.Event;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
@@ -13,11 +18,16 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date")
-    private int date;
+    private LocalDate date ;
 
     @Column(name = "nbPlace")
     private int nbPlace;
+
+    @ManyToOne()
+    @JoinColumn (name="event_id",referencedColumnName="id",unique=true)
+    private Event event;
 
     /**
      * Gets id.
@@ -42,7 +52,7 @@ public class Reservation {
      *
      * @return the date
      */
-    public int getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -51,7 +61,7 @@ public class Reservation {
      *
      * @param date the date
      */
-    public void setDate(int date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -71,5 +81,13 @@ public class Reservation {
      */
     public void setNbPlace(int nbPlace) {
         this.nbPlace = nbPlace;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }

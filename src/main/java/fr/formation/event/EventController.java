@@ -1,5 +1,6 @@
 package fr.formation.event;
 
+import fr.formation.artist.Artist;
 import fr.formation.userCommun.UserCommun;
 import fr.formation.userCommun.UserCommunService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,23 @@ public class EventController {
     public boolean Create(@RequestBody Event event) {
 
         return eventService.add(event);
+    }
+
+    @GetMapping(value = "/id/{id}",produces = "application/json")
+    public Event getEventById(@PathVariable long id){
+
+        return eventService.getEventById(id);
+
+    }
+
+    /**
+     *  modify the user with given id
+     * @param id : the id of the user to modify
+     * @param event : the new data
+     * @return true if the user has been modified, false otherwise
+     */
+    @PostMapping(value = "/id/{id}", consumes = "application/json")
+    public boolean modifyEvent(@PathVariable long id,@RequestBody Event event) {
+        return eventService.modifyEvent(id,event);
     }
 }

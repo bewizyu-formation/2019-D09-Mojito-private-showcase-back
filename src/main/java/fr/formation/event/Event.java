@@ -1,9 +1,14 @@
 package fr.formation.event;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.formation.reservation.Reservation;
+import fr.formation.user.User;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -16,21 +21,26 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(style = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date")
-    private Date date;
+    private LocalDate date ;
 
-    @Temporal(TemporalType.TIME)
-    @DateTimeFormat(style = "HH:mm:ss")
     @Column(name = "hour")
-    private Date hour;
+    private int hour;
 
     @Column(name = "adress")
     private String adress;
 
     @Column(name = "nbPlace")
     private int nbPlace;
+
+    /**
+     * link events to user when creating events
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    @JsonIgnore
+    private User owner;
 
     /**
      * Gets id.
@@ -55,7 +65,7 @@ public class Event {
      *
      * @return the date
      */
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -64,7 +74,7 @@ public class Event {
      *
      * @param date the date
      */
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -73,7 +83,7 @@ public class Event {
      *
      * @return the hour
      */
-    public Date getHour() {
+    public int getHour() {
         return hour;
     }
     /**
@@ -81,7 +91,7 @@ public class Event {
      *
      * @param hour the hour
      */
-    public void setHour(Date hour) {
+    public void setHour(int hour) {
         this.hour = hour;
     }
 
@@ -119,5 +129,14 @@ public class Event {
      */
     public void setNbPlace(int nbPlace) {
         this.nbPlace = nbPlace;
+    }
+
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
