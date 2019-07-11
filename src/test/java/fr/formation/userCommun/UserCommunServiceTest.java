@@ -168,7 +168,7 @@ public class UserCommunServiceTest {
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
         newUser.setPassword("passworda1");
-        newUser.setUsername("user");
+        newUser.setUsername("user2");
         Assertions.assertThat(userCommunService.addUserCommun(newUser)).isEqualTo(2);
     }
 

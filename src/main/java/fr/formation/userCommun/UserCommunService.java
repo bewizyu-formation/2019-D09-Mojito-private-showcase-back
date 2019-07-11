@@ -109,7 +109,7 @@ public class UserCommunService {
 
         if (this.userWithIdenticalNameExists(userToAdd)) {
             code = 3;
-        }else if( !Checks.checkPassword(userToAdd.getPassword())) {
+        }else if ( !Checks.checkPassword(userToAdd.getPassword())) {
             code = 2;
         } else if ( !Checks.checkEmail(userToAdd.getEmail())) {
             code = 4;
