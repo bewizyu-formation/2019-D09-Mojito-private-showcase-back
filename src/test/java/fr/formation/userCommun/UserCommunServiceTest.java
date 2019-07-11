@@ -134,7 +134,7 @@ public class UserCommunServiceTest {
         newUser.setAdress("21 rue de la rue");
         newUser.setPassword("passwordA1");
         newUser.setUsername("user");
-        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isTrue();
+        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isEqualTo(1);
     }
 
     @Test
@@ -144,7 +144,7 @@ public class UserCommunServiceTest {
         newUser.setCity("Amiens");
         newUser.setAdress("21 rue de la rue");
         newUser.setPassword("passwordA1");
-        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isFalse();
+        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isEqualTo(0);
     }
 
     @Test
@@ -158,7 +158,21 @@ public class UserCommunServiceTest {
         newUser.setAdress("21 rue de la rue");
         newUser.setPassword("passwordA1");
         newUser.setUsername("user");
-        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isFalse();
+        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isEqualTo(3);
+    }
+
+    @Test
+    public void addIncorrectPasswordUserCommun() {
+
+        Mockito.when(userRepository.findByUsername("user")).thenReturn(new User());
+
+        UserCommun newUser = new UserCommun();
+        newUser.setEmail("fake@email.com");
+        newUser.setCity("Amiens");
+        newUser.setAdress("21 rue de la rue");
+        newUser.setPassword("passworda1");
+        newUser.setUsername("user2");
+        Assertions.assertThat(userCommunService.addUserCommun(newUser)).isEqualTo(2);
     }
 
     @Test

@@ -111,27 +111,37 @@ public class UserCommunService {
      *  add a user to the database
      *
      * @param userToAdd : the user to add
-     * @return true if the user has been added, else false
+     * @return 1 if used added, 2 if password format incorrect, 3 if user already exist, 4 if format email incorrect, 0 if problem while insertion
      */
-    public boolean addUserCommun(UserCommun userToAdd){
+    public int addUserCommun(UserCommun userToAdd){
+        int code;
 
+        if (this.userWithIdenticalNameExists(userToAdd)) {
+            code = 3;
+        }else if ( !Checks.checkPassword(userToAdd.getPassword())) {
+            code = 2;
+        } else if ( !Checks.checkEmail(userToAdd.getEmail())) {
+            code = 4;
+        } else if (!Checks.checkWithPassword(userToAdd)){
+            code = 0;
+        } else {
+            try {
+                userToAdd.setPassword(passwordEncoder.encode(userToAdd.getPassword()));
+                userCommunRepository.save(userToAdd);
 
-        if(this.userWithIdenticalNameExists(userToAdd)){
-            return false;
-        }else{
-            if(!Checks.checkWithPassword(userToAdd)){
-                return false;
+                UserRole userRole = new UserRole();
+                userRole.setRole(ROLE_USER_SUFFIX);
+                userRole.setUserId(userToAdd.getId());
+
+                code = 1;
+            } catch( Exception e) {
+                code = 0;
             }
 
-            userToAdd.setPassword(passwordEncoder.encode(userToAdd.getPassword()));
-            userCommunRepository.save(userToAdd);
 
-            UserRole userRole = new UserRole();
-            userRole.setRole(ROLE_USER_SUFFIX);
-            userRole.setUserId(userToAdd.getId());
 
-            return true;
         }
+        return code;
     }
 
     /**
