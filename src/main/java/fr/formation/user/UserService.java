@@ -1,5 +1,6 @@
 package fr.formation.user;
 
+import fr.formation.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -7,12 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type User service.
@@ -99,5 +99,22 @@ public class UserService implements UserDetailsService {
 
 	public List<User> findAll() {
 		return userRepository.findAll();
+	}
+
+	public boolean addEvent(long id, Event event ) {
+
+		Optional<User> user = userRepository.findById(id);
+
+		try {
+			user.get().addEvent(event);
+			return true;
+
+		}
+		catch(Error err){
+			System.out.println(err);
+
+			return false;
+		}
+
 	}
 }

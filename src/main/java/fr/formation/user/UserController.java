@@ -1,11 +1,8 @@
 package fr.formation.user;
 
+import fr.formation.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,5 +43,10 @@ public class UserController {
 		return userService.findAll();
 	}
 
+	@PostMapping(value="/event", consumes = "application/json")
+	public boolean addEvent(@PathVariable long id, @RequestBody Event newEvent) {
+
+		return userService.addEvent(id, newEvent);
+	}
 
 }

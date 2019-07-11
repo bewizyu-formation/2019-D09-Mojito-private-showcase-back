@@ -1,12 +1,14 @@
 package fr.formation.userCommun;
 
 
+import fr.formation.event.Event;
 import fr.formation.user.User;
 import fr.formation.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/common")
@@ -56,7 +58,7 @@ public class UserCommonController  {
      * @return true if the user has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public boolean registerCommonUser(@RequestBody UserCommun newUser,@RequestParam String password) {
+    public boolean registerCommonUser(@RequestBody UserCommun newUser, @RequestParam(value="password") String password){
         newUser.setPassword(password);
         return userCommunService.addUserCommun(newUser);
     }
@@ -71,4 +73,6 @@ public class UserCommonController  {
     public boolean modifyCommonUser(@PathVariable long id,@RequestBody UserCommun newUser) {
         return userCommunService.modifyUserCommun(id,newUser);
     }
+
+
 }

@@ -79,7 +79,6 @@ public class EventService {
             eventToUpdate.setDate(event.getDate());
             eventToUpdate.setHour(event.getHour());
             eventToUpdate.setNbPlace(event.getNbPlace());
-
             eventRepository.save(eventToUpdate);
 
             return true;

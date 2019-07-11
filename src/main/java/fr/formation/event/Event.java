@@ -2,6 +2,7 @@ package fr.formation.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import fr.formation.reservation.Reservation;
+import fr.formation.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -32,8 +33,12 @@ public class Event {
     @Column(name = "nbPlace")
     private int nbPlace;
 
-
-
+    /**
+     * link events to user when creating events
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    private User owner;
 
     /**
      * Gets id.
