@@ -23,6 +23,11 @@ public class VoteController {
         return listVote;
     }
 
+    @GetMapping(value = "/id/{id}",produces = "application/json")
+    public Vote voteById(@PathVariable long id) {
+        return voteService.voteById(id);
+    }
+
     @PutMapping(value = "/", consumes = "application/json")
     public boolean registerVote(@RequestBody Vote newVote,@RequestParam int note) {
         return voteService.addVote(newVote);
