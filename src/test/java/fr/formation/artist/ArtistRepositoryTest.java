@@ -113,15 +113,20 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    public void addArtist() {
+    public void artistToAdd() {
 
-        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(1);
+//        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(1);
     }
 
     @Test
     public void addPartialArtist() {
-        newArtist.setEmail(null);
+        newArtist.setUsername(null);
         Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(0);
+    }
+    @Test
+    public void addPartialEmailEmpty() {
+        newArtist.setEmail(null);
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(4);
     }
 
     @Test
