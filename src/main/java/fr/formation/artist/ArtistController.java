@@ -2,9 +2,11 @@ package fr.formation.artist;
 
 import fr.formation.userCommun.UserCommun;
 import fr.formation.userCommun.UserCommunService;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -54,9 +56,16 @@ public class ArtistController {
      * @return true if the artist has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public boolean registerArtist(@RequestBody Artist newArtist,@RequestParam String password) {
+    public String registerArtist(@RequestBody Artist newArtist,@RequestParam String password, HttpServletResponse response) {
         newArtist.setPassword(password);
-        return artistService.addArtist(newArtist);
+        int code = artistService.addArtist(newArtist);
+        String message = code+"";
+        if(code == 1) {
+            response.setStatus(Response.SC_OK);
+        } else {
+            response.setStatus(Response.SC_BAD_REQUEST);
+        }
+        return message;
     }
 
     /**

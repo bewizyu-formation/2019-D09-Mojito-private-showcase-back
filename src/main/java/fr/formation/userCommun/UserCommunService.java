@@ -119,7 +119,7 @@ public class UserCommunService {
 
         if (this.userWithIdenticalNameExists(userToAdd)) {
             code = 3;
-        }else if ( !Checks.checkPassword(userToAdd.getPassword())) {
+        } else if ( !Checks.checkPassword(userToAdd.getPassword())) {
             code = 2;
         } else if ( !Checks.checkEmail(userToAdd.getEmail())) {
             code = 4;
@@ -133,6 +133,7 @@ public class UserCommunService {
                 UserRole userRole = new UserRole();
                 userRole.setRole(ROLE_USER_SUFFIX);
                 userRole.setUserId(userToAdd.getId());
+                userRoleRepository.save(userRole);
 
                 code = 1;
             } catch( Exception e) {
