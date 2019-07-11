@@ -96,4 +96,8 @@ public class UserService implements UserDetailsService {
 	public int getListSize(){
 		return userRepository.findAll().size();
 	}
+
+	public List<User> findAll() {
+		return userRepository.findAll();
+	}
 }

@@ -6,6 +6,7 @@ import fr.formation.user.UserRole;
 import fr.formation.user.UserRoleRepository;
 import fr.formation.util.Checks;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class ArtistService {
     private UserRepository userRepository;
     private ArtistRepository artistRepository;
     private UserRoleRepository userRoleRepository;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Instantiates a new Artist service.
@@ -28,10 +30,16 @@ public class ArtistService {
      * @param userRoleRepository the role repository
      */
     @Autowired
-    public ArtistService(UserRepository userRepository,ArtistRepository artistRepository, UserRoleRepository userRoleRepository) {
+    public ArtistService(
+            UserRepository userRepository,
+            ArtistRepository artistRepository,
+            UserRoleRepository userRoleRepository,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.artistRepository = artistRepository;
         this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -109,6 +117,8 @@ public class ArtistService {
             if(!Checks.checkWithPassword(artistToAdd)){
                 return false;
             }
+
+            artistToAdd.setPassword(passwordEncoder.encode(artistToAdd.getPassword()));
             artistRepository.save(artistToAdd);
 
             UserRole userRole = new UserRole();

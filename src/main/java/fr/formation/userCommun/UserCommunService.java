@@ -7,12 +7,14 @@ import fr.formation.user.UserRoleRepository;
 import fr.formation.util.Checks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+import static fr.formation.security.SecurityConstants.ROLE_USER;
 import static fr.formation.security.SecurityConstants.ROLE_USER_SUFFIX;
 
 @Service
@@ -21,6 +23,7 @@ public class UserCommunService {
     private UserRepository userRepository;
     private UserCommunRepository userCommunRepository;
     private UserRoleRepository userRoleRepository;
+    private PasswordEncoder passwordEncoder;
 
     /**
      * Instantiates a new User service.
@@ -30,10 +33,16 @@ public class UserCommunService {
      * @param userRoleRepository the role repository
      */
     @Autowired
-    public UserCommunService(UserRepository userRepository, UserCommunRepository userCommunRepository,UserRoleRepository userRoleRepository) {
+    public UserCommunService(
+            UserRepository userRepository,
+            UserCommunRepository userCommunRepository,
+            UserRoleRepository userRoleRepository,
+            PasswordEncoder passwordEncoder
+    ) {
         this.userRepository = userRepository;
         this.userCommunRepository = userCommunRepository;
         this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -117,6 +126,7 @@ public class UserCommunService {
             code = 0;
         } else {
             try {
+                userToAdd.setPassword(passwordEncoder.encode(userToAdd.getPassword()));
                 userCommunRepository.save(userToAdd);
 
                 UserRole userRole = new UserRole();
@@ -127,6 +137,9 @@ public class UserCommunService {
             } catch( Exception e) {
                 code = 0;
             }
+
+
+
         }
         return code;
     }
