@@ -1,9 +1,12 @@
 package fr.formation.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import fr.formation.reservation.Reservation;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -28,6 +31,9 @@ public class Event {
 
     @Column(name = "nbPlace")
     private int nbPlace;
+
+
+
 
     /**
      * Gets id.
@@ -117,4 +123,6 @@ public class Event {
     public void setNbPlace(int nbPlace) {
         this.nbPlace = nbPlace;
     }
+
+
 }
