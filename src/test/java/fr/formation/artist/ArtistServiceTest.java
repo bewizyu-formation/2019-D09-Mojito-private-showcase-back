@@ -137,7 +137,7 @@ public class ArtistServiceTest {
         newArtist.setUsername("user");
         newArtist.setDescription("lorem ipsum");
         newArtist.setName("FooBar");
-        Assertions.assertThat(artistService.addArtist(newArtist)).isTrue();
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(1);
     }
 
     @Test
@@ -147,7 +147,7 @@ public class ArtistServiceTest {
         newArtist.setCity("Amiens");
         newArtist.setAdress("21 rue de la rue");
         newArtist.setPassword("password");
-        Assertions.assertThat(artistService.addArtist(newArtist)).isFalse();
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(0);
     }
 
     @Test
@@ -163,7 +163,7 @@ public class ArtistServiceTest {
         newArtist.setUsername("user");
         newArtist.setDescription("lorem ipsum");
         newArtist.setName("FooBar");
-        Assertions.assertThat(artistService.addArtist(newArtist)).isFalse();
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(3);
     }
 
     @Test

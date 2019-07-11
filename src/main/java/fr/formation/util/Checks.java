@@ -27,7 +27,7 @@ public class Checks {
             return false;
         }
         return !((artist.getImage() == null ^ artist.getImageType() == null) || !(checkEmail(artist.getEmail())) || !(checkPassword(artist.getPassword()))
-                || artist.getDescription() == null || artist.getAdress() == null || artist.getName() == null || artist.getUsername() == null || artist.getCity() == null);
+                || artist.getDescription() == null || artist.getName() == null || artist.getUsername() == null || artist.getCity() == null);
     }
 
     public static boolean checkWithPassword(UserCommun user){
