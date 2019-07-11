@@ -1,6 +1,9 @@
 package fr.formation.event;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -13,11 +16,15 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(style = "dd-MM-yyyy HH:mm:ss")
     @Column(name = "date")
-    private int date;
+    private Date date;
 
+    @Temporal(TemporalType.TIME)
+    @DateTimeFormat(style = "HH:mm:ss")
     @Column(name = "hour")
-    private int hour;
+    private Date hour;
 
     @Column(name = "adress")
     private String adress;
@@ -48,7 +55,7 @@ public class Event {
      *
      * @return the date
      */
-    public int getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -57,7 +64,7 @@ public class Event {
      *
      * @param date the date
      */
-    public void setDate(int date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -66,7 +73,7 @@ public class Event {
      *
      * @return the hour
      */
-    public int getHour() {
+    public Date getHour() {
         return hour;
     }
     /**
@@ -74,7 +81,7 @@ public class Event {
      *
      * @param hour the hour
      */
-    public void setHour(int hour) {
+    public void setHour(Date hour) {
         this.hour = hour;
     }
 
