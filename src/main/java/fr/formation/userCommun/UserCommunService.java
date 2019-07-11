@@ -102,15 +102,19 @@ public class UserCommunService {
      *  add a user to the database
      *
      * @param userToAdd : the user to add
-     * @return 1 if used added, 2 if password format incorrect, 3 if user already exist, 0 if problem while insertion
+     * @return 1 if used added, 2 if password format incorrect, 3 if user already exist, 4 if format email incorrect, 0 if problem while insertion
      */
     public int addUserCommun(UserCommun userToAdd){
         int code;
 
-        if(this.userWithIdenticalNameExists(userToAdd)){
+        if (this.userWithIdenticalNameExists(userToAdd)) {
             code = 3;
-        }else if(!Checks.checkWithPassword(userToAdd)){
+        }else if( !Checks.checkPassword(userToAdd.getPassword())) {
             code = 2;
+        } else if ( !Checks.checkEmail(userToAdd.getEmail())) {
+            code = 4;
+        } else if (!Checks.checkWithPassword(userToAdd)){
+            code = 0;
         } else {
             try {
                 userCommunRepository.save(userToAdd);
