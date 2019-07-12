@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.formation.event.Event;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -27,7 +28,7 @@ public class User {
 	private String password;
 
 	@OneToMany(mappedBy = "owner")
-	private Set<Event> events;
+	private Set<Event> events = new HashSet<Event>();
 
 	/**
 	 * Gets id.

@@ -14,7 +14,6 @@ import java.util.Set;
 @Entity
 @Table(name = "event")
 
-
 public class Event {
 
     @Id
