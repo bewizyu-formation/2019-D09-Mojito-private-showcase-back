@@ -1,6 +1,7 @@
 package fr.formation.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fr.formation.reservation.Reservation;
 import fr.formation.user.User;
 
@@ -38,6 +39,7 @@ public class Event {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
+    @JsonIgnore
     private User owner;
 
     /**
@@ -130,4 +132,11 @@ public class Event {
     }
 
 
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 }

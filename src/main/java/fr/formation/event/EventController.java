@@ -48,7 +48,7 @@ public class EventController {
      * @return true if the user has been modified, false otherwise
      */
     @PostMapping(value = "/id/{id}", consumes = "application/json")
-    public boolean modifyArtist(@PathVariable long id,@RequestBody Event event) {
+    public boolean modifyEvent(@PathVariable long id,@RequestBody Event event) {
         return eventService.modifyEvent(id,event);
     }
 }

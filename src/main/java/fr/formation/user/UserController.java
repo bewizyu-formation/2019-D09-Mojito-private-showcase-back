@@ -38,15 +38,24 @@ public class UserController {
 
 	}
 
+	@GetMapping("/{id}")
+	public User getUser(@PathVariable long id) {
+
+		return userService.getUserById(id);
+
+	}
+
 	@GetMapping("all")
 	public List<User> findAll(){
 		return userService.findAll();
 	}
 
-	@PostMapping(value="/event", consumes = "application/json")
-	public boolean addEvent(@PathVariable long id, @RequestBody Event newEvent) {
+	@PostMapping(value="/{id}/event/add", consumes = "application/json")
+	public boolean addEvent(@PathVariable long id, @RequestBody Event event) {
 
-		return userService.addEvent(id, newEvent);
+		System.out.println(event);
+		return userService.addEvent(id, event);
 	}
+
 
 }
