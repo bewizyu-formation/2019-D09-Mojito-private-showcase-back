@@ -1,5 +1,7 @@
 package fr.formation.user;
 
+import fr.formation.event.Event;
+import fr.formation.event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -7,12 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The type User service.
@@ -24,6 +25,7 @@ public class UserService implements UserDetailsService {
 
 	private UserRoleRepository userRoleRepository;
 
+	private EventRepository eventRepository;
 	/**
 	 * Instantiates a new User service.
 	 *
@@ -31,9 +33,10 @@ public class UserService implements UserDetailsService {
 	 * @param userRoleRepository the user role repository
 	 */
 	@Autowired
-	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, EventRepository eventRepository) {
 		this.userRepository = userRepository;
 		this.userRoleRepository = userRoleRepository;
+		this.eventRepository = eventRepository;
 	}
 
 	/**
@@ -93,11 +96,70 @@ public class UserService implements UserDetailsService {
 		}
 	}
 
+	public User userById(long id){
+		Optional<User> optUser = userRepository.findById(id);
+		if(optUser.isPresent()){
+			return optUser.get();
+		}else{
+			return null;
+		}
+	}
+
+
+
 	public int getListSize(){
 		return userRepository.findAll().size();
 	}
 
 	public List<User> findAll() {
 		return userRepository.findAll();
+	}
+
+	public boolean addEvent(long id, Event event ) {
+
+		User user = this.userById(id);
+		System.out.println("user =>");
+		System.out.println(user.getId());
+
+		try {
+
+			Event evt = new Event();
+			evt.setNbPlace(event.getNbPlace());
+			evt.setAdress(event.getAdress());
+			evt.setDate(event.getDate());
+			evt.setHour(event.getHour());
+			evt.setId(event.getId());
+			evt.setOwner(user);
+			System.out.println(evt);
+
+			eventRepository.save(evt);
+			user.addEvent(evt);
+
+			userRepository.save(user);
+			return true;
+
+		}
+		catch(Error err){
+			System.out.println(err);
+
+			return false;
+		}
+
+	}
+
+	public User getUserById(long id) {
+
+		Optional<User> user = userRepository.findById(id);
+		try {
+
+			return user.get();
+
+		}
+		catch(Error err){
+			System.out.println(err);
+
+		}
+
+		return user.get();
 	}
 }

@@ -1,8 +1,6 @@
 package fr.formation.userCommun;
 
 
-import fr.formation.user.User;
-import fr.formation.user.UserService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +56,7 @@ public class UserCommonController  {
      * @return true if the user has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
+
     public String registerCommonUser(@RequestBody UserCommun newUser,@RequestParam String password, HttpServletResponse response) {
         newUser.setPassword(password);
         String message;
@@ -81,4 +80,6 @@ public class UserCommonController  {
     public boolean modifyCommonUser(@PathVariable long id,@RequestBody UserCommun newUser) {
         return userCommunService.modifyUserCommun(id,newUser);
     }
+
+
 }

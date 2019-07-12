@@ -1,11 +1,18 @@
 package fr.formation.event;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.formation.reservation.Reservation;
+import fr.formation.user.User;
+
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
 @Table(name = "event")
-
 
 public class Event {
 
@@ -13,8 +20,9 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date")
-    private int date;
+    private LocalDate date ;
 
     @Column(name = "hour")
     private int hour;
@@ -24,6 +32,14 @@ public class Event {
 
     @Column(name = "nbPlace")
     private int nbPlace;
+
+    /**
+     * link events to user when creating events
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id")
+    @JsonIgnore
+    private User owner;
 
     /**
      * Gets id.
@@ -48,7 +64,7 @@ public class Event {
      *
      * @return the date
      */
-    public int getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -57,7 +73,7 @@ public class Event {
      *
      * @param date the date
      */
-    public void setDate(int date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -112,5 +128,14 @@ public class Event {
      */
     public void setNbPlace(int nbPlace) {
         this.nbPlace = nbPlace;
+    }
+
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }
