@@ -134,11 +134,11 @@ public class ArtistRepositoryTest {
 
     @Test
     public void modifyArtist() {
-        Optional<Artist> optArtist = Optional.of(new Artist());
+        Artist artist = new Artist();
+        Optional<Artist> optArtist = Optional.of(artist);
         Mockito.when(artistRepository.findById(0l)).thenReturn(optArtist);
 
-
-        Assertions.assertThat(artistService.modifyArtist(0, newArtist)).isEqualTo(optArtist);
+        Assertions.assertThat(artistService.modifyArtist(0, newArtist)).isEqualTo(artist);
     }
 
     @Test

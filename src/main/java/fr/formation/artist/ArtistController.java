@@ -1,6 +1,5 @@
 package fr.formation.artist;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/artist")
 public class ArtistController {
-    ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     private ArtistService artistService;
 
@@ -21,13 +20,12 @@ public class ArtistController {
      * @return list of the common users
      */
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<Object> listArtist() {
-
-        List<Artist> result = artistService.listArtists();
-        if (result == null) {
-            return new ResponseEntity<>("Liste non disponible", HttpStatus.BAD_REQUEST);
-        } else {
+    public ResponseEntity<List<Artist>> listArtist() {
+        try {
+            List<Artist> result = artistService.listArtists();
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -39,13 +37,16 @@ public class ArtistController {
      * @return the user with id 'id'
      */
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    public ResponseEntity<Object> getArtistInfoById(@PathVariable long id) {
-
-        Artist result = artistService.artistById(id);
-        if (result == null) {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<Artist> getArtistInfoById(@PathVariable long id) {
+        try {
+            Artist artist = artistService.artistById(id);
+            if (artist == null) {
+                return new ResponseEntity<>(artist, HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(artist, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -56,13 +57,17 @@ public class ArtistController {
      * @return the user named 'username"
      */
     @GetMapping(value = "/name/{username}", produces = "application/json")
-    public ResponseEntity<String> getArtistInfoByUsername(@PathVariable String username) {
-        Artist artist = artistService.artistByUsername(username);
+    public ResponseEntity<Artist> getArtistInfoByUsername(@PathVariable String username) {
         try {
-            return new ResponseEntity<>(mapper.writeValueAsString(artist), HttpStatus.OK);
-        } catch (Exception e) {}
-
-        return new ResponseEntity<>("could not find artist", HttpStatus.BAD_REQUEST);
+            Artist artist = artistService.artistByUsername(username);
+            if (artist == null){
+                return new ResponseEntity<>(artist, HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<>(artist, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /**
@@ -72,14 +77,19 @@ public class ArtistController {
      * @return true if the artist has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public ResponseEntity<String> registerArtist(@RequestBody Artist newArtist, @RequestParam String password) {
+    public ResponseEntity<Boolean> registerArtist(@RequestBody Artist newArtist, @RequestParam String password) {
         newArtist.setPassword(password);
-        boolean result = artistService.addArtist(newArtist);
+
         try {
-            return new ResponseEntity<String>(mapper.writeValueAsString(newArtist), HttpStatus.OK);
+            if (artistService.addArtist(newArtist)) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.UNAUTHORIZED);
+            }
+
         } catch (Exception e) {
 
-            return new ResponseEntity<String>("Artiste non ajouté", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -89,17 +99,21 @@ public class ArtistController {
      *
      * @param id        : the id of the user to modify
      * @param newArtist : the new data
-     * @return true if the user has been modified, false otherwise
+     * @return the updated artist or null if no update happened
      */
     @PostMapping(value = "/id/{id}", consumes = "application/json")
-    public ResponseEntity<String> modifyArtist(@PathVariable long id, @RequestBody Artist newArtist) {
-        Artist artistUpdated = artistService.modifyArtist(id, newArtist);
-        if (artistUpdated != null) {
+    public ResponseEntity<Artist> modifyArtist(@PathVariable long id, @RequestBody Artist newArtist) {
+        Artist artistUpdated;
             try {
-                return new ResponseEntity<>(mapper.writeValueAsString(artistUpdated), HttpStatus.OK);
+                artistUpdated = artistService.modifyArtist(id, newArtist);
+                if (artistUpdated == null) {
+                    return new ResponseEntity<>(artistUpdated, HttpStatus.OK);
+                } else {
+                    return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+                }
+
             } catch (Exception e) {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
             }
         }
-        return new ResponseEntity<>("Modification non prise en compte", HttpStatus.BAD_REQUEST);
     }
-}
