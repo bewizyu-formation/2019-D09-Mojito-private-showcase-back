@@ -132,8 +132,9 @@ public class UserService implements UserDetailsService {
 			evt.setOwner(user);
 			System.out.println(evt);
 
-			user.addEvent(evt);
 			eventRepository.save(evt);
+			user.addEvent(evt);
+
 			userRepository.save(user);
 			return true;
 
