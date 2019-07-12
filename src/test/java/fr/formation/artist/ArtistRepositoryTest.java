@@ -138,13 +138,13 @@ public class ArtistRepositoryTest {
         Mockito.when(artistRepository.findById(0l)).thenReturn(optArtist);
 
 
-        Assertions.assertThat(artistService.modifyArtist(0,newArtist)).isTrue();
+        Assertions.assertThat(artistService.modifyArtist(0, newArtist)).isEqualTo(optArtist);
     }
 
     @Test
     public void modifyArtistWhenUserNotExists() {
         Mockito.when(artistRepository.findById(0l)).thenReturn(Optional.empty());
 
-        Assertions.assertThat(artistService.modifyArtist(0,newArtist)).isFalse();
+        Assertions.assertThat(artistService.modifyArtist(0,newArtist)).isNull();
     }
 }

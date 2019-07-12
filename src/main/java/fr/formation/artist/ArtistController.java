@@ -1,8 +1,6 @@
 package fr.formation.artist;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.formation.userCommun.UserCommun;
-import fr.formation.userCommun.UserCommunService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +11,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/artist")
 public class ArtistController {
+    ObjectMapper mapper = new ObjectMapper();
     @Autowired
     private ArtistService artistService;
-
 
     /**
      * list all artists
@@ -58,13 +56,13 @@ public class ArtistController {
      * @return the user named 'username"
      */
     @GetMapping(value = "/name/{username}", produces = "application/json")
-    public ResponseEntity<Object> getArtistInfoByUsername(@PathVariable String username) {
-        Artist result = artistService.artistByUsername(username);
-        if (result == null) {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(result, HttpStatus.OK);
-        }
+    public ResponseEntity<String> getArtistInfoByUsername(@PathVariable String username) {
+        Artist artist = artistService.artistByUsername(username);
+        try {
+            return new ResponseEntity<>(mapper.writeValueAsString(artist), HttpStatus.OK);
+        } catch (Exception e) {}
+
+        return new ResponseEntity<>("could not find artist", HttpStatus.BAD_REQUEST);
     }
 
     /**
@@ -75,8 +73,6 @@ public class ArtistController {
      */
     @PutMapping(value = "/", consumes = "application/json")
     public ResponseEntity<String> registerArtist(@RequestBody Artist newArtist, @RequestParam String password) {
-        ObjectMapper mapper = new ObjectMapper();
-
         newArtist.setPassword(password);
         boolean result = artistService.addArtist(newArtist);
         try {
@@ -97,11 +93,13 @@ public class ArtistController {
      */
     @PostMapping(value = "/id/{id}", consumes = "application/json")
     public ResponseEntity<String> modifyArtist(@PathVariable long id, @RequestBody Artist newArtist) {
-        boolean result = artistService.modifyArtist(id, newArtist);
-        if (result == true) {
-            return new ResponseEntity<>("Modification non prise en compte", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
+        Artist artistUpdated = artistService.modifyArtist(id, newArtist);
+        if (artistUpdated != null) {
+            try {
+                return new ResponseEntity<>(mapper.writeValueAsString(artistUpdated), HttpStatus.OK);
+            } catch (Exception e) {
+            }
         }
+        return new ResponseEntity<>("Modification non prise en compte", HttpStatus.BAD_REQUEST);
     }
 }

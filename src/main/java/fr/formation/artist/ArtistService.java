@@ -133,15 +133,15 @@ public class ArtistService {
      * modify a given artist with new data
      * @param id : the id of the artist to change
      * @param newArtist : the new data for the user
-     * @return true if the artist has been modified, false otherwise
+     * @return returns the new artist or null if no modification were made
      */
-    public boolean modifyArtist(long id,Artist newArtist){
+    public Artist modifyArtist(long id,Artist newArtist){
         Artist artistToUpdate = this.artistById(id);
         if(artistToUpdate == null){
-            return false;
+            return null;
         }else{
             if(!Checks.check(newArtist)){
-                return false;
+                return null;
             }
             artistToUpdate.setAdress(newArtist.getAdress());
             artistToUpdate.setCity(newArtist.getCity());
@@ -149,7 +149,7 @@ public class ArtistService {
 
             artistRepository.save(artistToUpdate);
 
-            return true;
+            return artistToUpdate;
         }
     }
 }
