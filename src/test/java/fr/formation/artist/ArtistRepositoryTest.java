@@ -113,15 +113,20 @@ public class ArtistRepositoryTest {
     }
 
     @Test
-    public void addArtist() {
+    public void artistToAdd() {
 
-        Assertions.assertThat(artistService.addArtist(newArtist)).isTrue();
+//        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(1);
     }
 
     @Test
     public void addPartialArtist() {
+        newArtist.setUsername(null);
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(0);
+    }
+    @Test
+    public void addPartialEmailEmpty() {
         newArtist.setEmail(null);
-        Assertions.assertThat(artistService.addArtist(newArtist)).isFalse();
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(4);
     }
 
     @Test
@@ -129,7 +134,7 @@ public class ArtistRepositoryTest {
 
         Mockito.when(userRepository.findByUsername("user")).thenReturn(new User());
 
-        Assertions.assertThat(artistService.addArtist(newArtist)).isFalse();
+        Assertions.assertThat(artistService.addArtist(newArtist)).isEqualTo(3);
     }
 
     @Test

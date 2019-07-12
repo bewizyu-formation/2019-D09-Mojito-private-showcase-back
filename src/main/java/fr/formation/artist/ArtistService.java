@@ -110,23 +110,34 @@ public class ArtistService {
      * @param artistToAdd : the artist to add
      * @return true if the artist has been added, else false
      */
-    public boolean addArtist(Artist artistToAdd){
+    public int addArtist(Artist artistToAdd){
+
+        int code;
         if(this.userWithIdenticalNameExists(artistToAdd)){
-            return false;
-        }else{
-            if(!Checks.checkWithPassword(artistToAdd)){
-                return false;
+            code = 3;
+        } else if ( !Checks.checkPassword(artistToAdd.getPassword())) {
+            code = 2;
+        } else if ( !Checks.checkEmail(artistToAdd.getEmail())) {
+            code = 4;
+        } else if (!Checks.checkWithPassword(artistToAdd)){
+            code = 0;
+        } else {
+            try {
+                artistToAdd.setPassword(passwordEncoder.encode(artistToAdd.getPassword()));
+                artistRepository.save(artistToAdd);
+                // Artist artist2 = artistRepository.findByUsername(artistToAdd.getUsername());
+
+                UserRole userRole = new UserRole();
+                userRole.setRole(ROLE_USER_SUFFIX);
+                userRole.setUserId(artistToAdd.getId());
+                userRoleRepository.save(userRole);
+
+                code = 1;
+            } catch (Exception e) {
+                code = 0;
             }
-
-            artistToAdd.setPassword(passwordEncoder.encode(artistToAdd.getPassword()));
-            artistRepository.save(artistToAdd);
-
-            UserRole userRole = new UserRole();
-            userRole.setRole(ROLE_USER_SUFFIX);
-            userRole.setUserId(artistToAdd.getId());
-
-            return true;
         }
+        return code;
     }
 
     /**
