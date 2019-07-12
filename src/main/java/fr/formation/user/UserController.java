@@ -1,6 +1,9 @@
 package fr.formation.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,24 +30,37 @@ public class UserController {
 	 * @param roles    the roles
 	 */
 	@PutMapping("/")
-	public boolean signup(@RequestParam String username, @RequestParam String password,
+	public ResponseEntity<String> signup(@RequestParam String username, @RequestParam String password,
 										 @RequestParam String... roles) {
 
-		return userService.addNewUser(username, password, roles);
-
+		boolean result = userService.addNewUser(username, password, roles);
+		if (result == true) {
+			return new ResponseEntity<>(username, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>("Nouvel utilisateur non enregistré", HttpStatus.BAD_REQUEST);
+		}
 	}
 
+
 	@GetMapping("/")
-	public int getSize() {
-
-		return userService.getListSize();
-
+	public ResponseEntity<String> getSize() {
+		Integer result = userService.getListSize();
+		try{
+			return new ResponseEntity<>(result.toString(), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Taille non disponible", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	@GetMapping("all")
-	public List<User> findAll(){
-		return userService.findAll();
+	public ResponseEntity<String> findAll() {
+		ObjectMapper mapper = new ObjectMapper();
+		List<User> result = userService.findAll();
+
+		try {
+			return new ResponseEntity<>(mapper.writeValueAsString(result), HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
+		}
 	}
-
-
 }
