@@ -2,6 +2,7 @@ package fr.formation.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.formation.artist.Artist;
 import fr.formation.reservation.Reservation;
 import fr.formation.user.User;
 
@@ -40,6 +41,25 @@ public class Event {
     @JoinColumn(name="user_id")
     @JsonIgnore
     private User owner;
+
+
+
+    /**
+     * attach an event to an artist when booking
+     */
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(unique = true)
+    private Artist artist;
+
+
+    public Artist getArtist() {
+        return artist;
+    }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
 
     /**
      * Gets id.
