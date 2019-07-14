@@ -1,8 +1,12 @@
 package fr.formation.artist;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.formation.event.Event;
 import fr.formation.user.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -35,6 +39,19 @@ public class Artist extends User {
 
     @Column(name = "adress")
     private String adress;
+
+
+    @Override
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Event event) {
+        this.events.add(event);
+    }
+
+    @OneToMany(mappedBy = "artist")
+    private Set<Event> events = new HashSet<Event>();
 
     /**
      * Get Adress
