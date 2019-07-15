@@ -27,6 +27,7 @@ public class Artist extends User {
     @Column(name = "description")
     private String description;
 
+    @Lob
     @Column(name = "longDescription")
     private String longDescription;
 
