@@ -1,9 +1,6 @@
 package fr.formation.userCommun;
 
 
-import fr.formation.event.Event;
-import fr.formation.user.User;
-import fr.formation.user.UserService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
