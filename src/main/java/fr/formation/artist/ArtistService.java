@@ -148,17 +148,16 @@ public class ArtistService {
      */
     public boolean modifyArtist(long id,Artist newArtist){
         Artist artistToUpdate = this.artistById(id);
+        // Check if the id exists
         if(artistToUpdate == null){
             return false;
         }else{
             if(!Checks.check(newArtist)){
                 return false;
             }
-            artistToUpdate.setAdress(newArtist.getAdress());
-            artistToUpdate.setCity(newArtist.getCity());
-            artistToUpdate.setEmail(newArtist.getEmail());
 
-            artistRepository.save(artistToUpdate);
+            // Save the new artist
+            artistRepository.save(newArtist);
 
             return true;
         }
