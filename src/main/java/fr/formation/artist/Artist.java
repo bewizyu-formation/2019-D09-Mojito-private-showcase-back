@@ -27,6 +27,9 @@ public class Artist extends User {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "longDescription")
+    private String longDescription;
+
     @Column(name = "image")
     private String image;
 
@@ -35,6 +38,9 @@ public class Artist extends User {
 
     @Column(name = "adress")
     private String adress;
+
+    @Column(name = "phone")
+    private String phone;
 
     /**
      * Get Adress
@@ -177,5 +183,41 @@ public class Artist extends User {
      */
     public void setImageType(String imageType) {
         this.imageType = imageType;
+    }
+
+    /**
+     * Gets the long description
+     *
+     * @return longDescription
+     */
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    /**
+     * Sets long description
+     *
+     * @param longDescription
+     */
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
+
+    /**
+     * Gets phone
+     *
+     * @return
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * Sets phone
+     *
+     * @param phone
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
