@@ -4,10 +4,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.formation.artist.Artist;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import fr.formation.artist.Artist;
+
 import fr.formation.user.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -19,7 +31,6 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
 
     @Column(name = "date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -82,8 +93,10 @@ public class Event {
      */
     public LocalDateTime getDate() {
 
-        return this.date;
+        return date;
     }
+
+
     /**
      * Sets date.
      *
@@ -93,6 +106,8 @@ public class Event {
 
         this.date = date;
     }
+
+
 
 
 

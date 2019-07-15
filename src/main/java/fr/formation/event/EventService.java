@@ -5,12 +5,14 @@ import fr.formation.reservation.ReservationRepository;
 import fr.formation.user.User;
 import fr.formation.user.UserRepository;
 import fr.formation.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,6 +57,7 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+
     public List<Event> ListPassedEvents() {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllPassedEvents(now);
@@ -68,6 +71,7 @@ public class EventService {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllIncommingEvents(now);
     }
+
     public boolean add(Event event) throws PersistenceException {
 
         try {
@@ -106,7 +110,6 @@ public class EventService {
             return false;
         }else{
 
-
             eventToUpdate.setDate(event.getDate());
             eventToUpdate.setNbPlace(event.getNbPlace());
             eventRepository.save(eventToUpdate);
@@ -114,6 +117,8 @@ public class EventService {
             return true;
         }
     }
+
+
     public boolean addEvent(long id, Event event ) {
 
         User user = this.userService.userById(id);
@@ -146,6 +151,5 @@ public class EventService {
         }
 
     }
-
 
 }

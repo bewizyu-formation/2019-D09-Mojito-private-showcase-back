@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
 
 	private EventDaoRepository eventDaoRepository;
 
+
 	/**
 	 * Instantiates a new User service.
 	 *
@@ -148,6 +149,7 @@ public class UserService implements UserDetailsService {
 		}
 
 	}
+
 
 	public User getUserById(long id) {
 

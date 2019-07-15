@@ -59,11 +59,6 @@ public class EventController {
         return listEvents;
     }
 
-    @PutMapping(value="/",consumes = "application/json")
-    public boolean Create(@RequestBody Event event) {
-
-        return eventService.add(event);
-    }
 
     @GetMapping(value = "/id/{id}",produces = "application/json")
     public Event getEventById(@PathVariable long id){
