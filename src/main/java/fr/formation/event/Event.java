@@ -3,33 +3,25 @@ package fr.formation.event;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import fr.formation.artist.Artist;
-import fr.formation.reservation.Reservation;
 import fr.formation.user.User;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashSet;
-import java.util.Set;
 
 
 @Entity
 @Table(name = "event")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "date")
 
+    @Column(name = "date")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
@@ -43,6 +35,7 @@ public class Event {
     @JoinColumn(name="user_id")
     @JsonIgnore
     private User owner;
+
 
 
     /**
@@ -60,6 +53,7 @@ public class Event {
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
+
 
 
 
@@ -87,15 +81,16 @@ public class Event {
      * @return the date
      */
     public LocalDateTime getDate() {
-        return date;
-    }
 
+        return this.date;
+    }
     /**
      * Sets date.
      *
      * @param date the date
      */
-    public void setDate(LocalDateTime date) {
+    public void setDate ( LocalDateTime date) {
+
         this.date = date;
     }
 

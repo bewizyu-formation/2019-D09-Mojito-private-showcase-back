@@ -2,6 +2,7 @@ package fr.formation.reservation;
 
 import fr.formation.event.Event;
 import fr.formation.event.EventDaoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,23 +13,26 @@ import java.util.Optional;
 @Service
 public class ReservationService {
 
-    private EventDaoRepository EventDaoRepository;
+    private EventDaoRepository eventDaoRepository;
+
     private ReservationRepository reservationRepository;
     /**
      * Instantiate a new Event Service
      *
-     * @param EventDaoRepository the event repository
+     * @param eventDaoRepository the event repository
      * @param reservationRepository the reservation repository
      */
 
     @Autowired
     public ReservationService(
             ReservationRepository reservationRepository,
-            EventDaoRepository EventDaoRepository
+            EventDaoRepository eventDaoRepository
 
     ) {
         this.reservationRepository = reservationRepository;
-        this.EventDaoRepository = EventDaoRepository;
+        this.eventDaoRepository = eventDaoRepository;
+        this.reservationRepository = reservationRepository;
+
     }
 
 

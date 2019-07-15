@@ -11,6 +11,10 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.PersistenceException;
 import java.time.LocalDateTime;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +24,7 @@ public class EventService {
     private EventDaoRepository eventRepository;
     private ReservationRepository reservationRepository;
     private UserRepository userRepository;
+
 
     /**
      * Instantiate a new Event Service
@@ -34,6 +39,7 @@ public class EventService {
             EventDaoRepository eventRepository,
             UserRepository userRepository
 
+
     ) {
         this.reservationRepository = reservationRepository;
         this.eventRepository = eventRepository;
@@ -42,6 +48,7 @@ public class EventService {
 
     @Autowired
     public UserService userService;
+
 
     public List<Event> listEvents() {
 
@@ -61,7 +68,6 @@ public class EventService {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllIncommingEvents(now);
     }
-
     public boolean add(Event event) throws PersistenceException {
 
         try {
@@ -100,6 +106,7 @@ public class EventService {
             return false;
         }else{
 
+
             eventToUpdate.setDate(event.getDate());
             eventToUpdate.setNbPlace(event.getNbPlace());
             eventRepository.save(eventToUpdate);
@@ -107,7 +114,6 @@ public class EventService {
             return true;
         }
     }
-
     public boolean addEvent(long id, Event event ) {
 
         User user = this.userService.userById(id);

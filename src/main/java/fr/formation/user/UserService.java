@@ -2,6 +2,7 @@ package fr.formation.user;
 
 import fr.formation.event.Event;
 import fr.formation.event.EventDaoRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,7 +26,8 @@ public class UserService implements UserDetailsService {
 
 	private UserRoleRepository userRoleRepository;
 
-	private EventDaoRepository EventDaoRepository;
+	private EventDaoRepository eventDaoRepository;
+
 	/**
 	 * Instantiates a new User service.
 	 *
@@ -36,7 +38,8 @@ public class UserService implements UserDetailsService {
 	public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository, EventDaoRepository EventDaoRepository) {
 		this.userRepository = userRepository;
 		this.userRoleRepository = userRoleRepository;
-		this.EventDaoRepository = EventDaoRepository;
+		this.eventDaoRepository = EventDaoRepository;
+
 	}
 
 	/**
@@ -116,6 +119,35 @@ public class UserService implements UserDetailsService {
 	}
 
 
+	public boolean addEvent(long id, Event event ) {
+
+		User user = this.userById(id);
+		System.out.println("user =>");
+		System.out.println(user.getId());
+
+		try {
+
+			Event evt = new Event();
+			evt.setNbPlace(event.getNbPlace());
+			evt.setDate(event.getDate());
+			evt.setId(event.getId());
+			evt.setOwner(user);
+			System.out.println(evt);
+
+			eventDaoRepository.save(evt);
+			user.addEvent(evt);
+
+			userRepository.save(user);
+			return true;
+
+		}
+		catch(Error err){
+			System.out.println(err);
+
+			return false;
+		}
+
+	}
 
 	public User getUserById(long id) {
 

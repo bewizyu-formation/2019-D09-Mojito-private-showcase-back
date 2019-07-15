@@ -44,13 +44,25 @@ public class EventController {
             }
         }
 
-        if ((id == null) && !incomming && !passed)  {
+        if ((id == null) && !incomming && !passed) {
             return null;
         }
 
         return eventService.listEvents();
 
+    }
 
+    public List<Event> listEvent(){
+
+        List<Event> listEvents =  eventService.listEvents();
+
+        return listEvents;
+    }
+
+    @PutMapping(value="/",consumes = "application/json")
+    public boolean Create(@RequestBody Event event) {
+
+        return eventService.add(event);
     }
 
     @GetMapping(value = "/id/{id}",produces = "application/json")
@@ -76,4 +88,5 @@ public class EventController {
 
          return eventService.addEvent(id, event);
     }
+
 }
