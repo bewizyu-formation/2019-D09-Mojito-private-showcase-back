@@ -24,16 +24,22 @@ public class EventController {
     @GetMapping(value = "/",produces = "application/json")
     public List<Event> listEvent(@RequestParam(required = false, value="passed") boolean passed, @RequestParam(required = false, value="incomming") boolean incomming,
                                  @RequestParam(required = false, value="id") String id ) {
-        if (passed) {
+        if (passed && id == null) {
 
             return eventService.ListPassedEvents();
 
         }
 
-        if (incomming) {
+        if (incomming && id == null) {
 
             return eventService.ListNextEvents();
 
+        }
+
+        if(passed && id != null) {
+             Long long_id = Long.parseLong(id);
+
+            return eventService.ListPassedOwnEvents(long_id);
         }
 
         if (id != null) {

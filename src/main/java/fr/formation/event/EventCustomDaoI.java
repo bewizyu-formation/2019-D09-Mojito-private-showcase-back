@@ -26,6 +26,7 @@ public interface EventCustomDaoI {
     @Query("SELECT e FROM Event e WHERE e.owner.id = :id")
     public List<Event> getOwnEvents(long id);
 
-
+    @Query("SELECT e FROM Event e WHERE e.owner.id = :id AND date < :passed")
+    public List<Event> getOwnPassedEvents(long id, LocalDateTime passed);
 }
 

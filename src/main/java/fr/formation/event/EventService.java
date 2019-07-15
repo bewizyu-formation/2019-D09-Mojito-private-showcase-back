@@ -57,16 +57,39 @@ public class EventService {
         return eventRepository.findAll();
     }
 
+    /**
+     * return list of passed events
+     * @return List<Event>
+     */
 
     public List<Event> ListPassedEvents() {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllPassedEvents(now);
     }
 
+    /**
+     * return list of passed events for a given user
+     * @param id
+     * @return List<Event>
+     */
+    public List<Event> ListPassedOwnEvents(long id) {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.getOwnPassedEvents(id, now);
+    }
+
+    /**
+     * return list of events for a given user
+     * @param id
+     * @return List<Event>
+     */
     public List<Event> ListOwnerEvents(long id) {
         return eventRepository.getOwnEvents(id);
     }
 
+    /**
+     * return list of incomming events
+     * @return List<Event>
+     */
     public List<Event> ListNextEvents() {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllIncommingEvents(now);
