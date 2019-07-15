@@ -28,12 +28,6 @@ public class EventController {
         return listEvents;
     }
 
-    @PutMapping(value="/",consumes = "application/json")
-    public boolean Create(@RequestBody Event event) {
-
-        return eventService.add(event);
-    }
-
     @GetMapping(value = "/id/{id}",produces = "application/json")
     public Event getEventById(@PathVariable long id){
 
@@ -47,8 +41,14 @@ public class EventController {
      * @param event : the new data
      * @return true if the user has been modified, false otherwise
      */
-    @PostMapping(value = "/id/{id}", consumes = "application/json")
+    @PutMapping(value = "/id/{id}", consumes = "application/json")
     public boolean modifyEvent(@PathVariable long id,@RequestBody Event event) {
         return eventService.modifyEvent(id,event);
+    }
+
+    @PostMapping(value="/{id}/add", consumes = "application/json")
+    public boolean addEvent(@PathVariable long id, @RequestBody Event event) {
+
+         return eventService.addEvent(id, event);
     }
 }

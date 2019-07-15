@@ -1,13 +1,12 @@
 package fr.formation.event;
 
-import fr.formation.event.Event;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface EventRepository extends JpaRepository<Event, Long> {
-
+public interface EventDaoRepository extends JpaRepository<Event, Long>, EventCustomDaoI {
     /**
      * Find all common users.
      **
@@ -23,4 +22,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
      * @return an optional conataining the common user of id 'id' if it exists
      */
     public Optional<Event> findById(Long id);
+
+
+
 }

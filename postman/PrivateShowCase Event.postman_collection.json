@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "7894b4b4-6811-4e52-b4d9-259591339850",
+		"name": "PrivateShowCase Event",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/event/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"2019-11-10 15:50:50\", \"nbPlace\":10, \"artist\": \n\t       {\n         \"id\": 5,\n        \"username\": \"OmarS\",\n        \"events\": [],\n        \"email\": \"omarsouza@cubajazz.fr\",\n        \"city\": \"Lille\",\n        \"name\": \"Omar\",\n        \"description\": \"artiste jazz\",\n        \"image\": null,\n        \"imageType\": null,\n        \"adress\": \"la Havanne\"\n    \n    }\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/event/3/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event",
+						"3",
+						"add"
+					]
+				},
+				"description": "get events"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/event/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"10-09-2019\",\"hour\": 15, \"adress\": \"place stanislas\", \"nbPlace\":10}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/event/{id}/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event",
+						"{id}",
+						""
+					]
+				},
+				"description": "get events"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/event/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"2019-10-10 15:50:50\", \"nbPlace\":10, \"artist\": \n\t\n\t\t\n     {\n        \"id\": 5,\n        \"username\": \"OmarS\",\n        \"email\": \"omarsouza@cubajazz.fr\",\n        \"city\": \"Lille\",\n        \"name\": \"Omar\",\n        \"description\": \"artiste jazz\",\n        \"image\": null,\n        \"imageType\": null,\n        \"adress\": \"la Havanne\"\n    }\n\t\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/event/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"event",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

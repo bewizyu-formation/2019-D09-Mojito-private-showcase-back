@@ -50,12 +50,7 @@ public class UserController {
 		return userService.findAll();
 	}
 
-	@PostMapping(value="/{id}/event/add", consumes = "application/json")
-	public boolean addEvent(@PathVariable long id, @RequestBody Event event) {
 
-		System.out.println(event);
-		return userService.addEvent(id, event);
-	}
 
 
 }

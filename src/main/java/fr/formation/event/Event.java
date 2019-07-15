@@ -2,34 +2,35 @@ package fr.formation.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import fr.formation.artist.Artist;
 import fr.formation.reservation.Reservation;
 import fr.formation.user.User;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
 
 @Entity
 @Table(name = "event")
-
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
     @Column(name = "date")
-    private LocalDate date ;
-
-    @Column(name = "hour")
-    private int hour;
-
-    @Column(name = "adress")
-    private String adress;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime date;
 
     @Column(name = "nbPlace")
     private int nbPlace;
@@ -43,12 +44,11 @@ public class Event {
     private User owner;
 
 
-
     /**
      * attach an event to an artist when booking
      */
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="artist_id")
     private Artist artist;
 
 
@@ -59,6 +59,7 @@ public class Event {
     public void setArtist(Artist artist) {
         this.artist = artist;
     }
+
 
 
     /**
@@ -84,7 +85,7 @@ public class Event {
      *
      * @return the date
      */
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
@@ -93,44 +94,11 @@ public class Event {
      *
      * @param date the date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    /**
-     * Gets hour.
-     *
-     * @return the hour
-     */
-    public int getHour() {
-        return hour;
-    }
-    /**
-     * Sets hour.
-     *
-     * @param hour the hour
-     */
-    public void setHour(int hour) {
-        this.hour = hour;
-    }
 
-    /**
-     * Gets adress.
-     *
-     * @return the hour
-     */
-    public String getAdress() {
-        return adress;
-    }
-
-    /**
-     * Sets adress.
-     *
-     * @param adress the adress
-     */
-    public void setAdress(String adress) {
-        this.adress = adress;
-    }
 
     /**
      * Gets nbPlace.
