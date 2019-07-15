@@ -6,9 +6,11 @@ import fr.formation.user.User;
 import fr.formation.user.UserRepository;
 import fr.formation.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.PersistenceException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +46,20 @@ public class EventService {
     public List<Event> listEvents() {
 
         return eventRepository.findAll();
+    }
+
+    public List<Event> ListPassedEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.getAllPassedEvents(now);
+    }
+
+    public List<Event> ListOwnerEvents(long id) {
+        return eventRepository.getOwnEvents(id);
+    }
+
+    public List<Event> ListNextEvents() {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.getAllIncommingEvents(now);
     }
 
     public boolean add(Event event) throws PersistenceException {
@@ -124,4 +140,6 @@ public class EventService {
         }
 
     }
+
+
 }

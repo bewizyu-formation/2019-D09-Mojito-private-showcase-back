@@ -29,6 +29,7 @@ public class Event {
     private Long id;
 
     @Column(name = "date")
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
 
