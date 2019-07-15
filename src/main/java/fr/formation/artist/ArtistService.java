@@ -157,6 +157,7 @@ public class ArtistService {
             }
 
             // Save the new artist
+            newArtist.setPassword(artistToUpdate.getPassword());
             artistRepository.save(newArtist);
 
             return true;
