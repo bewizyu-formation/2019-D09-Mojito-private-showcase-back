@@ -1,8 +1,6 @@
 package fr.formation.votes;
 
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import fr.formation.artist.Artist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,46 +17,48 @@ public class VoteController {
     private VoteService voteService;
 
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<Object> listVote() {
+    public ResponseEntity<List<Vote>> listVote() {
+        try {
 
-        List<Vote> result = voteService.listVotes();
-        if (result == null) {
-            return new ResponseEntity<>("Liste non disponible", HttpStatus.BAD_REQUEST);
-        } else {
+            List<Vote> result = voteService.listVotes();
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
 
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    public ResponseEntity<String> voteById(@PathVariable long id) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        Vote result = voteService.voteById(id);
+    public ResponseEntity<Vote> voteById(@PathVariable long id) {
         try {
-            return new ResponseEntity<>(mapper.writeValueAsString(result), HttpStatus.OK);
+            Vote result = voteService.voteById(id);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("vote introuvable", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping(value = "/", consumes = "application/json")
-    public ResponseEntity<String> registerVote(@RequestBody Vote newVote, @RequestParam int note) {
+    public ResponseEntity<Vote> registerVote(@RequestBody Vote newVote, @RequestParam int note) {
+        try {
         boolean result = voteService.addVote(newVote);
-        if (result == true) {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
+
+            return new ResponseEntity<>(newVote,result ==true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+
+        }catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
     @PostMapping(value = "/note/{note}", consumes = "application/json")
-    public ResponseEntity<String> modifyNote(@PathVariable Long id, @RequestBody Vote newVote) {
+    public ResponseEntity<Vote> modifyNote(@PathVariable Long id, @RequestBody Vote newVote) {
+        try {
         boolean result = voteService.modifyVote(newVote, id);
-        if (result == true) {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
+
+            return new ResponseEntity<>(newVote,result ==true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+
+        }catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }

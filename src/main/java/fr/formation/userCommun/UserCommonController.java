@@ -1,10 +1,6 @@
 package fr.formation.userCommun;
 
 
-import fr.formation.user.User;
-import fr.formation.user.UserService;
-import fr.formation.votes.Vote;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,14 +23,13 @@ public class UserCommonController {
      * @return list of the common users
      */
     @GetMapping(value = "/", produces = "application/json")
-    public ResponseEntity<Object> listCommonUsers() {
-
-        List<UserCommun> result = userCommunService.listUserCommun();
-
-        if (result == null) {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
-        } else {
+    public ResponseEntity<List<UserCommun>> listCommonUsers() {
+        try {
+            List<UserCommun> result = userCommunService.listUserCommun();
             return new ResponseEntity<>(result, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -45,12 +40,12 @@ public class UserCommonController {
      * @return the user with id 'id'
      */
     @GetMapping(value = "/id/{id}", produces = "application/json")
-    public ResponseEntity<Object> getCommonUserInfoById(@PathVariable long id) {
-        UserCommun result = userCommunService.userCommunById(id);
-        if (result == null) {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
-        } else {
+    public ResponseEntity<UserCommun> getCommonUserInfoById(@PathVariable long id) {
+        try {
+            UserCommun result = userCommunService.userCommunById(id);
             return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -61,12 +56,13 @@ public class UserCommonController {
      * @return the user named 'username"
      */
     @GetMapping(value = "/name/{username}", produces = "application/json")
-    public ResponseEntity<String> getCommonUserInfoByUsername(@PathVariable String username) {
-        UserCommun result = userCommunService.userCommunByUsername(username);
-        if (result == null) {
-            return new ResponseEntity<>("parametres invalides", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<UserCommun> getCommonUserInfoByUsername(@PathVariable String username) {
+        try {
+            UserCommun result = userCommunService.userCommunByUsername(username);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -77,23 +73,24 @@ public class UserCommonController {
      * @return true if the user has been added, false otherwise
      */
     @PutMapping(value = "/", consumes = "application/json")
-    public ResponseEntity<String> registerCommonUser(@RequestBody UserCommun newUser, @RequestParam String password, HttpServletResponse response) {
-        newUser.setPassword(password);
-        String message;
-        int code = userCommunService.addUserCommun(newUser);
-        message = code + "";
-        if (code == 1) {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
-        } else if (code == 2) {
-            return new ResponseEntity<>("Mot de passe incorrect", HttpStatus.BAD_REQUEST);
-        } else if (code == 3) {
-            return new ResponseEntity<>("Ce nom est déjà pris", HttpStatus.BAD_REQUEST);
-        } else if (code == 0) {
-            return new ResponseEntity<>("Mot de passe incorrect", HttpStatus.BAD_REQUEST);
-        } else if (code == 4) {
-            return new ResponseEntity<>("Email incorrect", HttpStatus.BAD_REQUEST);
+    public ResponseEntity registerCommonUser(@RequestBody UserCommun newUser, @RequestParam String password, HttpServletResponse response) {
+        try {
+            newUser.setPassword(password);
+            int code = userCommunService.addUserCommun(newUser);
+            if (code == 1) {
+                return new ResponseEntity<>(newUser, HttpStatus.OK);
+            } else if (code == 0 || code == 2) {
+                return new ResponseEntity<>("Mot de passe incorrect", HttpStatus.BAD_REQUEST);
+            } else if (code == 3) {
+                return new ResponseEntity<>("Ce nom est déjà pris", HttpStatus.BAD_REQUEST);
+            } else if (code == 4) {
+                return new ResponseEntity<>("Email incorrect", HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
-        return null;
     }
 
     /**
@@ -105,12 +102,12 @@ public class UserCommonController {
      */
 
     @PostMapping(value = "/id/{id}", consumes = "application/json")
-    public ResponseEntity<String> modifyCommonUser(@PathVariable long id, @RequestBody UserCommun newUser) {
-        boolean result = userCommunService.modifyUserCommun(id, newUser);
-        if (result == true) {
-            return new ResponseEntity<>("Modification non prise en compte", HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>("ok", HttpStatus.OK);
+    public ResponseEntity<UserCommun> modifyCommonUser(@PathVariable long id, @RequestBody UserCommun newUser) {
+        try {
+            boolean result = userCommunService.modifyUserCommun(id, newUser);
+            return new ResponseEntity<>(newUser, result == true ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
     }
 }
