@@ -27,6 +27,7 @@ public class User {
 	@JsonIgnore
 	private String password;
 
+	@OrderBy("date ASC")
 	@OneToMany(mappedBy = "owner")
 	private Set<Event> events = new HashSet<Event>();
 

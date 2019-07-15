@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "2ba3efc6-f13a-4ced-bf49-9dbf0f55fa32",
+		"name": "Reservations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/reservation/",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"date\":\"09-09-2019\", \"event\":    {\n        \"id\": 5   } , \"nbPlace\":7 };"
+				},
+				"url": {
+					"raw": "http://localhost:8080/reservation/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"reservation",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "012adf9c-6b1d-451e-be76-8811bb9be7a8",
+		"name": "PrivateShowCase Artist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/artist/",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\":\"omarsouza@cubajazz.fr\", \"city\": \"Lille\", \"name\": \"Omar\", \"username\": \"OmarS\", \"description\": \"artiste jazz\", \"adress\": \"la Havanne\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/artist/?password=Saxophon45",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"artist",
+						""
+					],
+					"query": [
+						{
+							"key": "password",
+							"value": "Saxophon45"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

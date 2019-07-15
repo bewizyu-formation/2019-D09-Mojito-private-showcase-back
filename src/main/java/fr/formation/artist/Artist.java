@@ -1,6 +1,7 @@
 package fr.formation.artist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fr.formation.event.Event;
 import fr.formation.user.User;
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name = "artist")
 
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 
 public class Artist extends User {
 
@@ -41,17 +43,6 @@ public class Artist extends User {
     private String adress;
 
 
-    @Override
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Event event) {
-        this.events.add(event);
-    }
-
-    @OneToMany(mappedBy = "artist")
-    private Set<Event> events = new HashSet<Event>();
 
     /**
      * Get Adress
@@ -195,4 +186,8 @@ public class Artist extends User {
     public void setImageType(String imageType) {
         this.imageType = imageType;
     }
+
+
+
+
 }

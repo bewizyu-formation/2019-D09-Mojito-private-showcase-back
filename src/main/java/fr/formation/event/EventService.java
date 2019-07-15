@@ -2,6 +2,9 @@ package fr.formation.event;
 
 import fr.formation.reservation.Reservation;
 import fr.formation.reservation.ReservationRepository;
+import fr.formation.user.User;
+import fr.formation.user.UserRepository;
+import fr.formation.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,8 +15,10 @@ import java.util.Optional;
 @Service
 public class EventService {
 
-    private EventRepository eventRepository;
+    private EventDaoRepository eventRepository;
     private ReservationRepository reservationRepository;
+    private UserRepository userRepository;
+
     /**
      * Instantiate a new Event Service
      *
@@ -24,13 +29,17 @@ public class EventService {
     @Autowired
     public EventService(
             ReservationRepository reservationRepository,
-            EventRepository eventRepository
+            EventDaoRepository eventRepository,
+            UserRepository userRepository
 
     ) {
         this.reservationRepository = reservationRepository;
         this.eventRepository = eventRepository;
+        this.userRepository = userRepository;
     }
 
+    @Autowired
+    public UserService userService;
 
     public List<Event> listEvents() {
 
@@ -75,13 +84,44 @@ public class EventService {
             return false;
         }else{
 
-            eventToUpdate.setAdress(event.getAdress());
             eventToUpdate.setDate(event.getDate());
-            eventToUpdate.setHour(event.getHour());
             eventToUpdate.setNbPlace(event.getNbPlace());
             eventRepository.save(eventToUpdate);
 
             return true;
         }
+    }
+
+    public boolean addEvent(long id, Event event ) {
+
+        User user = this.userService.userById(id);
+        System.out.println("user =>");
+        System.out.println(user.getId());
+
+        try {
+
+            Event evt = new Event();
+            evt.setNbPlace(event.getNbPlace());
+            evt.setDate(event.getDate());
+            evt.setId(event.getId());
+            evt.setOwner(user);
+            evt.setArtist(event.getArtist());
+            System.out.println(evt);
+
+
+            eventRepository.save(evt);
+            userRepository.save(user);
+            //user.addEvent(evt);
+
+
+            return true;
+
+        }
+        catch(Error err){
+            System.out.println(err);
+
+            return false;
+        }
+
     }
 }

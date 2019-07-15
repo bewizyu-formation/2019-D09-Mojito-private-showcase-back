@@ -1,7 +1,7 @@
 package fr.formation.user;
 
 import fr.formation.event.Event;
-import fr.formation.event.EventRepository;
+import fr.formation.event.EventDaoRepository;
 import fr.formation.event.EventService;
 import fr.formation.user.User;
 import fr.formation.user.UserRepository;
@@ -16,6 +16,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +30,7 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
-    private EventRepository eventRepository;
+    private EventDaoRepository EventDaoRepository;
     @Mock
     private PasswordEncoder passwordEncoder;
     @InjectMocks
@@ -47,7 +49,6 @@ public class UserServiceTest {
 
         userService.findAll().size();
 
-
         User user = new User();
         user.setUsername("jeanne");
         user.setPassword("trombonNe45");
@@ -57,25 +58,23 @@ public class UserServiceTest {
         Event event = new Event();
         event.setId(10L);
         event.setOwner(user);
-        event.setHour(14);
 
-        LocalDate date = LocalDate.of(2019,12,4);
+        LocalDateTime date = LocalDateTime.of(LocalDate.of(2019,10,2), LocalTime.of(15,15));
         event.setDate(date);
-        event.setAdress("place Daurade");
         event.setNbPlace(15);
 
-        eventRepository.save(event);
+        EventDaoRepository.save(event);
         userRepository.save(user);
 
         Mockito.when(userRepository.findById(111L)).thenReturn(Optional.of(user));
         Assertions.assertThat(userService.getUserById(111L)).isEqualTo(user);
 
-        Mockito.when(eventRepository.findById(10L)).thenReturn(Optional.of(event));
+        Mockito.when(EventDaoRepository.findById(10L)).thenReturn(Optional.of(event));
         Assertions.assertThat(eventService.getEventById(10L)).isEqualTo(event);
 
         Mockito.when(userRepository.findById(111L)).thenReturn(Optional.of(user));
 
-        userService.addEvent(
+        /**userService.addEvent(
                 user.getId(),event
         );
 
@@ -84,15 +83,12 @@ public class UserServiceTest {
         Assertions.assertThat(userService.getUserById(111L).getEvents().size()>0);
 
         /**
-         //eventRepository.save(event);
-         //eventRepository.save(event);
+         //EventDaoRepository.save(event);
+         //EventDaoRepository.save(event);
          userService.addEvent(user.getId(), event);
          Assertions.assertThat(eventService.listEvents().size()==1);
          Assertions.assertThat(userService.getUserById(111L).getEvents().size()>0);
          */
-
-
-
     }
 
 
