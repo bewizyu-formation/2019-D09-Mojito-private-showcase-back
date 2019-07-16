@@ -42,7 +42,12 @@ public class Artist extends User {
     @Column(name = "adress")
     private String adress;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "artist")
+    private Set<Event> events = new HashSet<Event>();
 
+    @Column(name = "phone")
+    private String phone;
 
     /**
      * Get Adress
@@ -189,5 +194,30 @@ public class Artist extends User {
 
 
 
+    /**
+     * Gets phone
+     *
+     * @return
+     */
+    public String getPhone() {
+        return phone;
+    }
 
+    /**
+     * Sets phone
+     *
+     * @param phone
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public Set<Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Event event) {
+        this.events.add(event);
+    }
 }

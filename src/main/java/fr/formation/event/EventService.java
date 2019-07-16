@@ -53,13 +53,23 @@ public class EventService {
         return eventRepository.getAllPassedEvents(now);
     }
 
-    public List<Event> ListOwnerEvents(long id) {
+    public List<Event> getEventOwned(long id) {
         return eventRepository.getOwnEvents(id);
     }
 
     public List<Event> ListNextEvents() {
         LocalDateTime now = LocalDateTime.now();
         return eventRepository.getAllIncommingEvents(now);
+    }
+
+    public List<Event> getPassedEventsOwned(long id) {
+        LocalDateTime now = LocalDateTime.now();
+       return eventRepository.getPassedOwnedEvents(id, now);
+    }
+
+    public List<Event> getIncomingEventsOwned(long id ) {
+        LocalDateTime now = LocalDateTime.now();
+        return eventRepository.getIncomingOwnedEvents(id, now);
     }
 
     public boolean add(Event event) throws PersistenceException {

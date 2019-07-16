@@ -22,29 +22,51 @@ public class EventController {
      * @return list of the common users
      */
     @GetMapping(value = "/",produces = "application/json")
-    public List<Event> listEvent(@RequestParam(required = false, value="passed") boolean passed, @RequestParam(required = false, value="incomming") boolean incomming,
-                                 @RequestParam(required = false, value="id") String id ) {
-        if (passed) {
+    public List<Event> listEvent(@RequestParam(required = false, value="past") boolean passed, @RequestParam(required = false, value="incoming") boolean incoming,
+                                 @RequestParam(required = false, value="owner") String id ) {
 
-            return eventService.ListPassedEvents();
-
+        if (id == null) {
+            id = "0";
         }
+        Long long_id = Long.parseLong(id);
 
-        if (incomming) {
+        if( long_id == 0 ) {
 
-            return eventService.ListNextEvents();
+            if (passed && !incoming ) {
 
-        }
+                return eventService.ListPassedEvents();
 
-        if (id != null) {
-            Long long_id = Long.parseLong(id);
-            if (long_id >= 1) {
+            }
 
-                return eventService.ListOwnerEvents(long_id);
+            if (incoming && !passed) {
+
+                return eventService.ListNextEvents();
+
+            }
+            if (incoming && passed) {
+                return eventService.listEvents();
             }
         }
 
-        if ((id == null) && !incomming && !passed)  {
+        if (long_id >= 1) {
+
+            if (passed && !incoming) {
+
+                return eventService.getPassedEventsOwned(long_id);
+            }
+
+            if (!passed && incoming) {
+
+                return eventService.getIncomingEventsOwned(long_id);
+            }
+
+            if (passed && incoming) {
+
+                return eventService.getEventOwned(long_id);
+            }
+        }
+
+        if ((long_id == 0) && !incoming && !passed)  {
             return null;
         }
 

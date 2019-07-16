@@ -35,6 +35,16 @@ public class EventDaoImpl implements EventCustomDaoI {
     public List<Event> getOwnEvents(long id) {
         return null;
     }
+
+    @Override
+    public List<Event> getPassedOwnedEvents(long id, LocalDateTime now) {
+        return null;
+    }
+
+    @Override
+    public List<Event> getIncomingOwnedEvents(long id, LocalDateTime now) {
+        return null;
+    }
 }
 
 
