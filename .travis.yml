@@ -8,8 +8,9 @@ addons:
       secure: $SONAR_CLOUD_TOKEN
     branches:
     - master
+    - develop
 jdk:
- - oraclejdk8
+ - openjdk8
 script:
   - mvn clean package -P dev-h2
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar -P dev-h2

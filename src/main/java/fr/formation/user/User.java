@@ -1,8 +1,12 @@
 package fr.formation.user;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import fr.formation.event.Event;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The type User.
@@ -23,6 +27,8 @@ public class User {
 	@JsonIgnore
 	private String password;
 
+	@OneToMany(mappedBy = "owner")
+	private Set<Event> events = new HashSet<Event>();
 
 	/**
 	 * Gets id.
@@ -83,4 +89,12 @@ public class User {
 		this.password = password;
 	}
 
+
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void addEvent(Event event) {
+		this.events.add(event);
+	}
 }

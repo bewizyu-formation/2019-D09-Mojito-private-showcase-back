@@ -1,10 +1,10 @@
 package fr.formation.user;
 
+import fr.formation.event.Event;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The type User controller.
@@ -24,11 +24,38 @@ public class UserController {
 	 * @param roles    the roles
 	 */
 	@PutMapping("/")
-	public void signup(@RequestParam String username, @RequestParam String password,
+	public boolean signup(@RequestParam String username, @RequestParam String password,
 										 @RequestParam String... roles) {
 
-		userService.addNewUser(username, password, roles);
+		return userService.addNewUser(username, password, roles);
 
 	}
+
+	@GetMapping("/")
+	public int getSize() {
+
+		return userService.getListSize();
+
+	}
+
+	@GetMapping("/{id}")
+	public User getUser(@PathVariable long id) {
+
+		return userService.getUserById(id);
+
+	}
+
+	@GetMapping("all")
+	public List<User> findAll(){
+		return userService.findAll();
+	}
+
+	@PostMapping(value="/{id}/event/add", consumes = "application/json")
+	public boolean addEvent(@PathVariable long id, @RequestBody Event event) {
+
+		System.out.println(event);
+		return userService.addEvent(id, event);
+	}
+
 
 }
